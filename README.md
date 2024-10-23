@@ -1,7 +1,7 @@
 # IPSIE
 OpenID IPSIE Working Group Repository
 
-The [Interoperability Profiling for Secure Identity in the Enterprise (IPSIE) Work Group]([url](https://openid.net/wg/ipsie/)) develops interoperability and security profiles of existing specifications that enable secure identity management within the enterprise.
+The [Interoperability Profiling for Secure Identity in the Enterprise (IPSIE) Work Group](https://openid.net/wg/ipsie/) develops interoperability and security profiles of existing specifications that enable secure identity management within the enterprise.
 
 The current state of identity within an enterprise extends well beyond single-sign-on. Many aspects of enterprise identity are covered by specifications inside and outside of the OIDF community: OpenID Connect, Shared Signals, OAuth 2.0, SCIM, and more.
 
