@@ -16,7 +16,8 @@ The initial problem space focuses on:
 * Risk Signal Sharing
 * Logout
 * Token Revocation
-* It may also address problems, like: 
+
+It may also address problems, like: 
 
 Discoverability of specific features within the above capabilities
 * New user onboarding and account recovery
