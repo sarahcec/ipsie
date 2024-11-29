@@ -45,7 +45,7 @@ To make that happen, I need to know:
 
 > be notified when sessions have been invalidated
 
-## Receive Signals about Account Posture or Integretity Changes
+## Receive Signals about Account Posture or Integritity Changes
 
 > receive real-time signals about changes in account posture or integrity
 
