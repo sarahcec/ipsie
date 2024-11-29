@@ -4,7 +4,7 @@ As a developer building a new B2B SaaS application, I need to:
 * set up user authentication via federated relationship with a customer's workforce IdP
 * ensure end users only have access to what they need in my application at any given point in time
 * be able to convey to the customer's IdP that I require a certain authentication level
-* know whether that authentication level was met at the IdP during a sign in
+* know whether that authentication level was met at the IdP during a sign-in
 * be notified when tokens have been revoked
 * be notified when sessions have been invalidated
 * receive real-time signals about changes in account posture or integrity
@@ -33,9 +33,9 @@ To make that happen, I need to know:
 
 > be able to convey to the customer's IdP that I require a certain authentication level
 
-## Know whether Required Atuhentication Level was Met at the IdP
+## Know whether Required Authentication Level was Met at the IdP
 
-> know whether that authentication level was met at the IdP during a sign in
+> know whether that authentication level was met at the IdP during a sign-in
 
 ## Receive Notifications of Revoked Tokens
 
@@ -45,7 +45,7 @@ To make that happen, I need to know:
 
 > be notified when sessions have been invalidated
 
-## Receive Signals about Account Posture or Integritity Changes
+## Receive Signals about Account Posture or Integrity Changes
 
 > receive real-time signals about changes in account posture or integrity
 
