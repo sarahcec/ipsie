@@ -8,7 +8,7 @@ As a developer building a new B2B SaaS application, I need to:
 * be notified when tokens have been revoked
 * be notified when sessions have been invalidated
 * receive real-time signals about changes in account posture or integrity
-* receive real-time signals about changes in the endpoint posture or integrity.
+* receive real-time signals about changes in the device posture or integrity.
 
 To make that happen, I need to know:
 
