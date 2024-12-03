@@ -20,6 +20,10 @@ To make that happen, I need to know:
 
 ---
 
+## User Authentication via Workforce IdP
+
+> set up user authentication via federated relationship with a customer's workforce IdP
+
 ## User Provisioning and Deprovisioning
 
 > set up user provisioning and deprovisioning between a customer's workforce IdP and my application
