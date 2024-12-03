@@ -3,9 +3,8 @@ As a developer building a new B2B SaaS application, I need to:
 * set up user and group provisioning and deprovisioning between a customer's workforce IdP and my application
 * set up user authentication via federated relationship with a customer's workforce IdP
 * ensure end users only have access to what they need in my application at any given point in time
-* be able to convey to the customer's IdP that I require a certain authentication level
+* be able to convey to the customer's IdP that I require a certain authentication level, require step-up authentication, or require re-authentication (e.g. due to policy enforcement at the RP)
 * know whether that authentication level was met at the IdP during a sign-in
-* be able to convey to the customer's IdP that step-up authentication or re-authentication is required
 * be notified when tokens have been revoked
 * be notified when sessions have been invalidated
 * receive real-time signals about changes in account posture or integrity
@@ -32,15 +31,11 @@ To make that happen, I need to know:
 
 ## Convey Required Authentication Level to the IdP
 
-> be able to convey to the customer's IdP that I require a certain authentication level
+> be able to convey to the customer's IdP that I require a certain authentication level, request step-up, or request re-authentication of the user via the customer's IdP
 
 ## Know whether Required Authentication Level was Met at the IdP
 
-> know whether that authentication level was met at the IdP during a sign-in
-
-## Convey request for step-up or re-authentication to the IdP to the customer's IdP 
-
-> request step-up or re-authentication of the user via the customer's IdP
+> know whether that authentication level was met at the IdP during a sign-in, step-up, or re-authentication event
 
 ## Receive Notifications of Revoked Tokens
 
