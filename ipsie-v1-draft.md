@@ -1,4 +1,6 @@
-As a developer building a new B2B SaaS application, I need to:
+## Framing
+
+As a developer building a new business application, which will be used by many organizations (also known as a B2B SaaS application), I need to:
 
 * set up user and group provisioning and deprovisioning between a customer's workforce IdP and my application
 * set up user authentication via federated relationship with a customer's workforce IdP
