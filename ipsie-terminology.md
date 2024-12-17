@@ -1,5 +1,6 @@
 # IPSIE Terminology
 
+=======
 ## Roles
 
 ### Enterprise
@@ -8,7 +9,7 @@ Enterprises are generally defined as entities - e.g. corportations, non-profit o
 
 Ultimately, the goal of the IPSIE standard is to better serve the enterprise company. Enterprises prefer to centralize the authentication process of all the applications used across the enterprise. Among other benefits, this allows users to have only one set of credentials to manage, and enables the company to manage which users can access which applications in a central location.  
 
-The enterprise is also referred to as the "customer", since they may be a customer of the Identity Provider and multiple Applications.
+The enterprise company is also referred to as the "customer", since they may be a customer of the Identity Provider and multiple Applications.
 
 ### Identity Provider
 
@@ -34,9 +35,4 @@ The "User" is part of the workforce of the enterprise company, and is able to us
 ### Tenant
 
 TBD
-
-
-
-
-
 
