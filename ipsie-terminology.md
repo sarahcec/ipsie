@@ -31,6 +31,10 @@ The "User" is part of the workforce of the enterprise company, and is able to us
 
 ## Terminology
 
+### Workforce
+
+The people engaged in work for a particular organization. Employees, contractors, and university faculty and staff are common examples of these people within a workforce.
+
 ### Tenant
 
 TBD
