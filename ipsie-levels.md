@@ -1,13 +1,13 @@
 # IPSIE Levels
 
-## Authentication
+## Session Lifecycle Management
 
 |                              | Log In                                            | MFA & Log Out                                                         | Continuous Access                                                 |
 |------------------------------|---------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------|
 | Requirement                  | IPSIE A1                                          | IPSIE A2                                                              | IPSIE A3                                                          |
 | Single Sign-On               | Required (FAL2)                                   | Same as A2                                                            | Same as A2                                                        |
-| MFA                          | IdP-enforced (app doesn't need to do anything)    | IdP communicates MFA level to app. App can request MFA level from IdP | Same as A2                                                        |
-| Revocation                   | RP matches session lifetime to assertion lifetime | IdP can terminate sessions for individual users in the app            | Same as A2                                                        |
+| MFA                          | IdP-enforced (app doesn't need to do anything). IdP communicates MFA level to app.     | IdP MUST accept MFA level requests from the app | Same as A2                                                        |
+| Revocation                   | RP MUST match session lifetime to assertion lifetime | App MUST accept session termination requests from IdP for individual users            | Same as A2                                                        |
 | Continuous Access (RP->IdP)  | None                                              | None                                                                  | App communicates session changes to IdP such as IP address change |
 | Continuous Access (IdP->RP)  | None                                              | None                                                                  | IdP communicates changes in account and device posture to app     |
 
@@ -35,13 +35,13 @@ The IdP communicates changes in the account and device posture to the applicatio
 
 
 
-## Provisioning
+## Identity Lifecycle Management
 
 |                              | JIT                                               | Pre-Provisioning                                                      | Entitlements                                          |
 |------------------------------|---------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------|
 | Requirement                  | IPSIE P1                                          | IPSIE P2                                                              | IPSIE P3                                              |
-| Provisioning                 | JIT provisioning from SSO                         | Users can be provisioned before they sign in                          | Same as P2                                            |
-| Deprovisioning               | None                                              | Users can be deprovisioned by the IdP                                 | Same as P2                                            |
+| Provisioning                 | JIT provisioning from SSO                         | App MUST allowed users to be provisioned by the IdP before they sign in                          | Same as P2                                            |
+| Deprovisioning               | None                                              | App MUST allow users to be deprovisioned by the IdP                                 | Same as P2                                            |
 | Entitlements                 | None                                              | None                                                                  | Group provisioning and deprovisioning from IdP to app |
 
 
