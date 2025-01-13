@@ -66,13 +66,37 @@ An authentication method that requires users to provide more than one independen
 
 In a general context, refers to the process of establishing and implementing policies, procedures, and frameworks to effectively manage and control an organization or system. In the context of Identity and Access Management (IAM), governance involves overseeing the use of digital identities and their access to resources across an organization. This includes setting standards, guidelines, and best practices for managing identities and access, as well as defining roles and responsibilities for IAM stakeholders, such as administrators, users, and auditors.
 
+### Phishing Resistant Authentication
+
+Phishing resistant authentication mechanisms are those which sufficiently prevent the credential from being socially engineered from the user (e.g. phished).  These mechanisms generally do not depend on shared secrets like passwords, rather, they depend on using challenge response protocols where the credential is the private key portion of a public key pair used to sign over a challenge, the signature is verified by the verifier (authentication service).  Phishing resistant authentication protocols must be verifier impersonation resistant to prevent a malicious service from successfully impersonating the verifier.  This is accomplished through mechanisms that bind the credential to a fully qualified domain name.  FIDO, smartcards, and mutual TLS are examples of phishing resistant authentication mechanisms.
+
 ## Protocols
 
 A protocol is a set of rules and guidelines for communicating and exchanging data between different systems or entities. IAM protocols define standardized methods for user authentication, authorization, and access management, and enable different applications and services to interoperate and share identity information. Some of the commonly used IAM protocols include SAML (Security Assertion Markup Language), OAuth (Open Authorization), OpenID Connect, and SCIM (System for Cross-domain Identity Management). These protocols provide a common language and framework for implementing IAM solutions, and help ensure interoperability and compatibility across different systems and applications.
 
+### Continuous Access Evaluation Protocol (CAEP)
+
+TBD
+
+### OAuth 2.0
+
+TBD
+
 ### OpenID Connect (OIDC)
 
 A protocol built on top of the OAuth 2.0 framework of specification (IETF RFC 6749 and 6750), used for authentication purposes. OIDC allows for the exchange of identity information between parties, such as an identity provider and a relying party (e.g., a web application). It is designed to provide single sign-on (SSO) capabilities, as well as support for user authentication using JSON Web Tokens (JWTs). OIDC is widely used in modern IAM solutions and is supported by many popular identity providers and service providers.
+
+### Risk Information Sharing & Collaboration
+
+TBD
+
+### SAML
+
+TBD
+
+### Shared Signals Framework (SSF)
+
+TBD
 
 ### System for Cross-domain Identity Management (SCIM)
 
