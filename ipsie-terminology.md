@@ -6,7 +6,7 @@
 
 Enterprises are generally defined as entities - e.g. corportations, non-profit organizations, partnerships.  Enterprises have a workforce comprised of employees, contractors, volunteers, and others who operate on behalf of the enterprise.  Enterprises deploy applications and services to support their organizational needs.  Government, non-governmental organizations, educational entities, small businesses, and others may consider themselves enterprises.
 
-Ultimately, the goal of the IPSIE standard is to better serve the enterprise company. Enterprises prefer to centralize the authentication process of all the applications used across the enterprise. Among other benefits, this allows users to have only one set of credentials to manage, and enables the company to manage which users can access which applications in a central location.  
+Ultimately, the goal of the IPSIE standard is to better serve the enterprise organization. Enterprises prefer to centralize the authentication process of all the applications used across the enterprise. Among other benefits, this allows users to have only one set of credentials to manage, and enables the company to manage which users can access which applications in a central location. In this framing, enterprises have user directories, identity providers, relying parties, data, and the policies that are used to grant, suspend, and revoke user access.
 
 The enterprise company is also referred to as the "customer", since they may be a customer of the Identity Provider and multiple Applications.
 
