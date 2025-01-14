@@ -37,14 +37,14 @@ The IdP communicates changes in the account and device posture to the applicatio
 
 ## Identity Lifecycle Management
 
-|                              | JIT                                               | Pre-Provisioning                                                      | Entitlements                                          |
+|                              | JIT                                               | Async                                                      |                                           |
 |------------------------------|---------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------|
 | Requirement                  | IPSIE P1                                          | IPSIE P2                                                              | IPSIE P3                                              |
 | Provisioning                 | JIT provisioning from SSO                         | App MUST allowed users to be provisioned by the IdP before they sign in                          | Same as P2                                            |
 | Deprovisioning               | None                                              | App MUST allow users to be deprovisioned by the IdP                                 | Same as P2                                            |
-| Entitlements                 | None                                              | None                                                                  | Group provisioning and deprovisioning from IdP to app |
+| Groups                 | None                                              | None                                                                  | Group provisioning and deprovisioning from IdP to app |
 
-
+The goal is the enterprise demonstrates control over the identity lifecycle.
 
 ### IPSIE Provisioning Level P1 - JIT Provisioning
 
