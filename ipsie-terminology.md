@@ -68,7 +68,7 @@ In a general context, refers to the process of establishing and implementing pol
 
 ### Phishing Resistant Authentication
 
-Phishing resistant authentication mechanisms are those which sufficiently prevent the credential from being socially engineered from the user (e.g. phished).  These mechanisms generally do not depend on shared secrets like passwords, rather, they depend on using challenge response protocols where the credential is the private key portion of a public key pair used to sign over a challenge, the signature is verified by the verifier (authentication service).  Phishing resistant authentication protocols must be verifier impersonation resistant to prevent a malicious service from successfully impersonating the verifier.  This is accomplished through mechanisms that bind the credential to a fully qualified domain name.  FIDO, smartcards, and mutual TLS are examples of phishing resistant authentication mechanisms.
+Phishing resistant authentication mechanisms are those which effectively prevent remote account access through relayed secrets or assertion. These mechanisms rely on verifier impersonation resistance, achieved through techniques like [verifier name binding](FUTURE LINK) or [channel binding](FUTURE LINK), which block malicious services from impersonating legitimate verifiers. Examples of phishing-resistant authentication mechanisms include FIDO2/WebAuthn and mutual TLS.
 
 ## Protocols
 
