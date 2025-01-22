@@ -37,17 +37,15 @@ The IdP communicates changes in the account and device posture to the applicatio
 
 ## Identity Lifecycle Management
 
-|                              | JIT Control Over User Provisioning                | User Pre-Provisioning and Deprovisioning Control                      |  User, Group, and Group Membership Pre-Provisioning and Deprovisioning Control|
-|------------------------------|---------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------|
-| Requirement                  | IPSIE P1                                          | IPSIE P2                                                              | IPSIE P3                                              |
-| Provisioning Control         | User provisioning MUST be controlled by the enterprise via the IdP. <br> Out of band provisioning / self provisioning by users SHALL NOT be allowed. | Same as P1 | Same as P2 |
-| Provisioning                 | JIT-based provisioning MUST be enabled.           | App MUST allow users to be provisioned by the IdP prior to sign in. <br> JIT-based provisioning MAY be enabled.   | Same as P2         |
-| Deprovisioning               | None                                              | App MUST allow users to be deprovisioned by the IdP.                  | Same as P2                                            |
+|                              | JIT User Provisioning Control               | User Pre-Provisioning and Deprovisioning Control| 
+|------------------------------|---------------------------------------------|-------------------------------------------------|
+| Requirement                  | IPSIE P1                                    | IPSIE P2                                        |
+| Provisioning Control         | User provisioning MUST be controlled by the enterprise via the IdP. <br> Out of band provisioning / self provisioning by users SHALL NOT be allowed. | Same as P1 | 
+| Provisioning                 | JIT-based provisioning MUST be enabled.     | App MUST allow users to be provisioned by the IdP prior to sign in. <br> JIT-based provisioning MAY be enabled. |
+| Deprovisioning               | None                                        | App MUST allow users to be deprovisioned by the IdP.|
 
 
-
-
-### IPSIE Provisioning Level P1 - JIT Control Over User Provisioning
+### IPSIE Provisioning Level P1 - JIT User Provisioning Control
 
 IPSIE Provisioning Level P1 requires the IdP to provision users in the application when they log in via SSO. Users must not exist in the application prior to the user logging in for the first time, eliminating alternative pathways for user provisioning (e.g. self-provisioning).
 
@@ -57,9 +55,9 @@ Level P2 adds the ability to provision and deprovision users in the application 
 
 ## Entitlements Management
 
-|                              | No Entitlements Management Control                | Group and Group Membership Pre-Provisioning and Deprovisioning Control| Group and Group Membership Anti-Entropy Control       |
-|------------------------------|---------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------|
-| Requirement                  | IPSIE E1                                          | IPSIE E2                                                              | IPSIE E3                                              |
+|                              | No Entitlements Management Control | Group and Group Membership Pre-Provisioning and Deprovisioning Control| Group and Group Membership Anti-Entropy Control|
+|------------------------------|------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------|
+| Requirement                  | IPSIE E1                           | IPSIE E2                                                              | IPSIE E3                                       |
 | Entitlements                 | Entitlements are managed independently by the IdP and application | IdP and App MUST enable asynchronous pre-provisioning / deprovisioning of groups and group memberships.| Groups and group memberships MUST be controlled by the enterprise via the IdP as a single source of truth.<br> <br> Group and group membership provisioning via the App SHALL NOT be allowed. <br> IdP and application MUST implement anti-entropy controls for groups and group membership. |
 
 ### IPSIE Entitlements Management Level E1 - No Entitlements Management Control
