@@ -36,7 +36,9 @@ The people engaged in work for a particular organization. Employees, contractors
 
 ### Tenant
 
-TBD
+In a multitenant system, a tenant represents an organization or group of consumers, such as partners, customers, business units, departments, projects, or environments (e.g., production or test) within a larger entity. Each tenant has users and resources assigned to them, and only these users can access the resources within their specific tenant. Tenancy can be hierarchical, allowing a parent tenant to have sub-tenants, with resources potentially shared among them.
+
+Isolation between tenants varies along a spectrum based on business needs. At one end, physical resources are shared by trusted parties with minimal disruption, while at the other end, tenants are completely unaware of each other and may have dedicated resources. High-end solutions ensure full privacy between untrusted parties, whereas lower-end solutions allow for reduced isolation among trusted parties sharing a system.
 
 ### User Group
 
