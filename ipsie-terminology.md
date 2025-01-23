@@ -74,7 +74,7 @@ A protocol is a set of rules and guidelines for communicating and exchanging dat
 
 ### OAuth 2.0
 
-A widely-used protocol that enables third-party applications to obtain limited access to user resources without exposing user credentials. It is a cornerstone of modern Identity and Access Management (IAM) systems, facilitating secure interactions between users and applications. OAuth 2.0 operates on a token-based mechanism, where an authorization server issues an access token to a third-party application after the user consents. This token allows the application to access specific resources on the user's behalf, such as social media profiles or cloud storage, without requiring the user to share their login details directly with the application.
+OAuth 2.0 is a widely-used authorization (authZ) protocol that enables both first-party and third-party applications to obtain limited access to user resources without exposing user credentials. It is a cornerstone of modern Identity and Access Management (IAM) systems, facilitating secure interactions between users and applications. OAuth 2.0 operates on a token-based mechanism, where an authorization server issues an access token to an application after the user consents. This token allows the application to access specific resources on the user's behalf, such as social media profiles or cloud storage, without requiring the user to share their login details directly with the application. OAuth 2.0 supports a variety of deployment models, making it versatile for different use cases and environments.
 
 ### OpenID Connect (OIDC)
 
