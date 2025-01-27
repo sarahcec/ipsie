@@ -1,4 +1,6 @@
-# IPSIE Levels
+# IPSIE 
+
+The capabilities documented in the levels below are specified as functionality for the relying party / applications to implement. In practice, enterprises that purchase SaaS applications should use these levels in RFPs to define the capabilities required of their applications.  The enterprise's identity systems (IdP, directory, etc.) may or may not support all of the functionality supported by a particular relying party / application.
 
 ## Session Lifecycle Management
 
