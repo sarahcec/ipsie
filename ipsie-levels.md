@@ -1,4 +1,23 @@
-# IPSIE 
+# IPSIE Levels
+
+
+- *SL* - Session Lifecycle
+- *IL* - Identity Lifecycle
+
+| IPSIE<br>LEVEL|   Application<br>(aka RP)                             |  Enterprise<br>(aka IdP)                         |
+|---------------|-------------------------------------------------------|---------------------------------------------------|
+| SL1           |  - FAL2<br>- Session lifetime MUST match assertion lifetime  | - MFA enforced and sent to App  |
+| SL2           |  - Requests MFA<br>- MUST accept session termination request | - MUST accept MFA level requests |
+| SL2           |  - MUST communicate posture changes                   | - MUST communicate posture changes                |
+|               |                                                       |                                                   |
+| IL1           |  - MUST support JIT and MUST accept attributes        | - MUST send centrally managed attributes            |
+| IL2           |  - MUST support mapping group claims to roles         | - MUST send selected group claims                   |
+| IL3           |  - MUST support accepting async identity lifecycle requests    | - MUST support sending identity lifecycle requests |
+
+Each level includes the previous level (eg IL3 includes IL2 and IL1)
+
+
+-----
 
 
 ## Session Lifecycle Management
