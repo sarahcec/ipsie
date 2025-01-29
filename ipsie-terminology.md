@@ -6,27 +6,25 @@
 
 Enterprises are generally defined as entities - e.g. corportations, non-profit organizations, partnerships.  Enterprises have a workforce comprised of employees, contractors, volunteers, and others who operate on behalf of the enterprise.  Enterprises deploy applications and services to support their organizational needs.  Government, non-governmental organizations, educational entities, small businesses, and others may consider themselves enterprises.
 
-Ultimately, the goal of the IPSIE standard is to better serve the enterprise organization. Enterprises prefer to centralize the authentication process of all the applications used across the enterprise. Among other benefits, this allows users to have only one set of credentials to manage, and enables the company to manage which users can access which applications in a central location. In this framing, enterprises have user directories, identity providers, relying parties, data, and the policies that are used to grant, suspend, and revoke user access.
+Ultimately, the goal of the IPSIE standard is to better serve the enterprise organization. Enterprises prefer to centralize the authentication process of all the applications used across the enterprise. Among other benefits, this allows users to have only one set of credentials to manage, and enables the company to manage which users can access which applications in a central location. In this framing, enterprises have identity services, applications, data, and the policies that are used to grant, suspend, and revoke user access.
 
-The enterprise company is also referred to as the "customer", since they may be a customer of the Identity Provider and multiple Applications.
+The enterprise company is also referred to as the "customer", since they may be a customer of the Identity Service provider(s) and multiple Applications.
 
-### Identity Provider
+### Identity Service
 
-The enterprise's "Identity Provider", abbreviated IdP, is used by the enterprise to manage users within their organization. The Identity Provider is often purchased by the enterprise company as a service, but can also be open source software or developed in-house.
+The enterprise's "Identity Service" the logical set of services used by the enterprise to manage users within their organization. The Identity Service is often purchased by the enterprise company as a service or set of services, but can also be open source software or developed in-house.  The identity service may be a single component, or multiple components with discrete functionality.
 
-The identity provider is where the users' access to applications and other resources is managed and enforced.
+The identity service is where the users' access to applications and other resources is managed and enforced.
 
 ### Application
 
-The "Application" is ultimately used by people within the enterprise company during their day to day work. Applications have their own resources, and users may be limited in which applications they can access or what they can do within an application. Applications use the Identity Provider to authenticate users through a "single sign-on" process.
-
-Applications may also be referred to as the "Relying Party" (RP) during a single sign-on flow.
+The "Application" is ultimately used by people within the enterprise company during their day to day work. Applications have their own resources, and users may be limited in which applications they can access or what they can do within an application. Applications use the Identity Service to authenticate users through a "single sign-on" process.  Users and entitlements are provisioned to applications through the identity service.
 
 Applications may be purchased by the enterprise company as a service from the application vendor, in which case they are commonly referred to "Software as a Service" (SaaS).
 
 ### User
 
-The "User" is part of the workforce of the enterprise company, and is able to use the identity provider to log in to applications.  
+The "User" is part of the workforce of the enterprise company, and is able to use the Identity Service to log in to applications.  
 
 ## Terminology
 
@@ -74,7 +72,7 @@ A protocol is a set of rules and guidelines for communicating and exchanging dat
 
 ### OpenID Connect (OIDC)
 
-A protocol built on top of the OAuth 2.0 framework of specification (IETF RFC 6749 and 6750), used for authentication purposes. OIDC allows for the exchange of identity information between parties, such as an identity provider and a relying party (e.g., a web application). It is designed to provide single sign-on (SSO) capabilities, as well as support for user authentication using JSON Web Tokens (JWTs). OIDC is widely used in modern IAM solutions and is supported by many popular identity providers and service providers.
+A protocol built on top of the OAuth 2.0 framework of specification (IETF RFC 6749 and 6750), used for authentication purposes. OIDC allows for the exchange of identity information between parties, such as an Identity Service and a relying party (e.g., a web application). It is designed to provide single sign-on (SSO) capabilities, as well as support for user authentication using JSON Web Tokens (JWTs). OIDC is widely used in modern IAM solutions and is supported by many popular Identity Services and service providers.
 
 ### System for Cross-domain Identity Management (SCIM)
 
