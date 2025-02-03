@@ -1,25 +1,27 @@
 # IPSIE Levels
 
-- *A* - Authentication & Single Sign On
+- *A* - Authentication
 - *SL* - Session Lifecycle
 - *IL* - Identity Lifecycle
+- *E* - Entitlements
 
-Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). Requirements at a lower level may be made OPTIONAL at a higher level if explicitly defined. (e.g. JIT provisioning is required at IL1 and OPTIONAL at IL2). 
+Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). Requirements at a lower level may be made OPTIONAL at a higher level if explicitly defined. (e.g. JIT provisioning is required at IL1 and OPTIONAL at IL2). Each set of levels is _independent_ from other levels (e.g. an application may achieve E3 while all other sets are at Level 1).
 
 | IPSIE<br>LEVEL|   Applications<br>(aka RP)                                                 |  Identity Services                                                                                             |
 |---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| A1            | - NIST800-63rev3 FAL2 Compliance                                           | - NIST800-63rev3 FAL2 Compliance <br> - MFA enforcement by the Enterprise Identity Service and communicated to the Application |
-| A2            | - Application must send MFA level requests to the Identity Service         | - Identity Service MUST accept MFA level requests from Applications                                            |
+| A1            | - MUST meet NIST800-63rev3 FAL2 compliance                                 | - MUST meet NIST800-63rev3 FAL2 Compliance <br> - MUST enforce MFA and communicate an authentication class to the application          |
+| A2            | - MUST send authentication method requests to the Identity Service         | - MUST accept authentication method requests from Applications                                            |
+||||
 | SL1           |  - Session lifetime MUST match assertion lifetime                          |                                                                                                                |
 | SL2           |  - MUST accept & act upon session termination request                      | - MUST send session termination requests to Applications                                                       |
-| SL3           |  - MUST communicate posture changes to Identity Services (e.g. change in IP address, theft of bearer tokens) <br> - MUST accept posture changes from Identity Services | - MUST communicate posture changes for user and device to the Application <br> - MUST accept posture changes from Applications |
+| SL3           |  - MUST communicate posture changes to Identity Services<br> - MUST accept posture changes from Identity Services | - MUST communicate posture changes for user and device to the Application <br> - MUST accept posture changes from Applications |
+||||
 | IL1           |  - MUST support JIT provisioning of users <br> - MUST accept users attributes during provisioning <br> - Out of band provisioning/self provisioning SHALL NOT be allowed | - MUST support JIT provisioning of users <br> - MUST send centrally managed attributes during provisioning |
 | IL2           |  - MUST support pre-provisioning of users by the Identity Services prior to signin <br> - MAY support JIT  provisioning <br> - MUST support deprovisioning of users by Identity Services <br> - MUST support mapping group claims to roles | - MUST support pre-provisioning of users in Applications <br> - MAY support JIT provisioning of users in Applications <br> - MUST support deprovisioning of users in Applications <br> - MUST send selected group claims to Applications |
-| E1            | | |
-| E2            | | |
-
-
-
+||||
+| E1            | - MAY support JIT provisioning of groups and group memberships             | - MAY support JIT provisioning of groups and group memberships  |
+| E2            | - MUST support asynchronous pre-provisioning/deprovisioning of groups and group memberships <br> - MUST NOT allow group and group membership provisioning via the application |  - MUST support asynchronous pre-provisioning/deprovisioning of groups and group memberships  |
+| E3            | - MUST implement anti-entropy controls for groups and group membership.    | - MUST implement anti-entropy controls for groups and group membership.          |
 
 -----
 
@@ -27,38 +29,31 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 
 Level A1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level A1 meets the requirements of [FAL2](https://pages.nist.gov/800-63-4/sp800-63c/fal/).
 
-The Application respects the session lifetime as communicated by the Identity Service in the assertion, and reauthenticates the user through the Identity Service after the expiration.
-
-
 ### IPSIE Authentication Level A2 - MFA and Log Out
 
 Level A2 adds the ability to communicate information about the user's authentication method between Identity Service and Application. The Identity Service includes claims about the authentication level in the assertion to the Application. The Application can request a specific authentication level of the Identity Service.
 
-Level A2 also adds the ability for the Identity Service to terminate sessions of individual users in the app.
+### IPSIE Session Lifecycle SL1 - Session Lifetime
+The Application respects the session lifetime as communicated by the Identity Service in the assertion, and reauthenticates the user through the Identity Service after the expiration.
 
+### IPSIE Session Lifecycle SL2 - Session Termination
+The Identity Services must be able to communicate a session termination event.  The Application must act upon session termination requests from the Identity Services.
 
-### IPSIE Authentication Level A3 - Continuous Access
+### IPSIE Session Lifecycle SL3 - Continuous Access
 
-Level A3 adds continuous access to the authentication between Identity Service and application.
+Level SL3 adds continuous access to the authentication between Identity Service and application.
 
 The app communicates session changes to the Identity Service such as IP address change, enabling the Identity Service to be aware of more context around what is happening to users' sessions after the initial sign-in.
 
-The Identity Service communicates changes in the account and device posture to the application, enabling the application to take actions it determines are necessary based on its own policies about these changes.
+The Identity Service communicates changes in the account and device posture to the application, enabling the application to take actions it determines are necessary based on its own policies about these changes.  Neither application nor identity services are obliged to act upon any state changes, the policies for responding to state changes are not in scope for SL3.
 
-### IPSIE Provisioning Level P1 - JIT User Provisioning Control
+### IPSIE Identity Lifecycle Level IL1 - JIT User Provisioning Control
 
 IPSIE Provisioning Level P1 requires the Identity Service to provision users in the application when they log in via SSO. Users must not exist in the application prior to the user logging in for the first time, eliminating alternative pathways for user provisioning (e.g. self-provisioning).
 
-### IPSIE Provisioning Level P2 - User Pre-Provisioning and Deprovisioning Control 
+### IPSIE Identity Lifecycle Level IL2 - User Pre-Provisioning and Deprovisioning Control 
 
 Level P2 adds the ability to provision and deprovision users in the application before they have logged in. Prior to level P2, users were only JIT-provisioned in the application as part of SSO. An application at P2 MUST support pre-provisioning and deprovisioning of users.  Identity Services and Apps at P2 MAY support JIT provisioning for downward compatability with an Identity Service / Application operating at Level P1.
-
-## Entitlements Management
-
-|                              | No Entitlements Management Control | Group and Group Membership Pre-Provisioning and Deprovisioning Control| Group and Group Membership Anti-Entropy Control|
-|------------------------------|------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------|
-| Requirement                  | IPSIE E1                           | IPSIE E2                                                              | IPSIE E3                                       |
-| Entitlements                 | Entitlements are managed independently by the Identity Service and application | Identity Service and App MUST enable asynchronous pre-provisioning / deprovisioning of groups and group memberships.| Groups and group memberships MUST be controlled by the enterprise via the Identity Service as a single source of truth.<br> <br> Group and group membership provisioning via the App SHALL NOT be allowed. <br> Identity Service and application MUST implement anti-entropy controls for groups and group membership. |
 
 ### IPSIE Entitlements Management Level E1 - No Entitlements Management Control
 
