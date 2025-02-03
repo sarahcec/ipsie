@@ -1,35 +1,27 @@
 # IPSIE Levels
 
-
+- *A* - Authentication & Single Sign On
 - *SL* - Session Lifecycle
 - *IL* - Identity Lifecycle
 
-| IPSIE<br>LEVEL|   Application<br>(aka RP)                             |  Enterprise<br>(aka IdP)                         |
-|---------------|-------------------------------------------------------|---------------------------------------------------|
-| SL1           |  - FAL2<br>- Session lifetime MUST match assertion lifetime  | - MFA enforced and sent to App  |
-| SL2           |  - Requests MFA<br>- MUST accept session termination request | - MUST accept MFA level requests |
-| SL2           |  - MUST communicate posture changes                   | - MUST communicate posture changes                |
-|               |                                                       |                                                   |
-| IL1           |  - MUST support JIT and MUST accept attributes        | - MUST send centrally managed attributes            |
-| IL2           |  - MUST support mapping group claims to roles         | - MUST send selected group claims                   |
-| IL3           |  - MUST support accepting async identity lifecycle requests    | - MUST support sending identity lifecycle requests |
+Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). Requirements at a lower level may be made OPTIONAL at a higher level if explicitly defined. (e.g. JIT provisioning is required at IL1 and OPTIONAL at IL2). 
 
-Each level includes the previous level (eg IL3 includes IL2 and IL1)
+| IPSIE<br>LEVEL|   Applications<br>(aka RP)                                                 |  Identity Services                                                                                             |
+|---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| A1            | - NIST800-63rev3 FAL2 Compliance                                           | - NIST800-63rev3 FAL2 Compliance <br> - MFA enforcement by the Enterprise Identity Service and communicated to the Application |
+| A2            | - Application must send MFA level requests to the Identity Service         | - Identity Service MUST accept MFA level requests from Applications                                            |
+| SL1           |  - Session lifetime MUST match assertion lifetime                          |                                                                                                                |
+| SL2           |  - MUST accept & act upon session termination request                      | - MUST send session termination requests to Applications                                                       |
+| SL3           |  - MUST communicate posture changes to Identity Services (e.g. change in IP address, theft of bearer tokens) <br> - MUST accept posture changes from Identity Services | - MUST communicate posture changes for user and device to the Application <br> - MUST accept posture changes from Applications |
+| IL1           |  - MUST support JIT provisioning of users <br> - MUST accept users attributes during provisioning <br> - Out of band provisioning/self provisioning SHALL NOT be allowed | - MUST support JIT provisioning of users <br> - MUST send centrally managed attributes during provisioning |
+| IL2           |  - MUST support pre-provisioning of users by the Identity Services prior to signin <br> - MAY support JIT  provisioning <br> - MUST support deprovisioning of users by Identity Services <br> - MUST support mapping group claims to roles | - MUST support pre-provisioning of users in Applications <br> - MAY support JIT provisioning of users in Applications <br> - MUST support deprovisioning of users in Applications <br> - MUST send selected group claims to Applications |
+| E1            | | |
+| E2            | | |
+
+
 
 
 -----
-
-
-## Session Lifecycle Management
-
-|                              | Log In                                            | MFA & Log Out                                                         | Continuous Access                                                 |
-|------------------------------|---------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------|
-| Requirement                  | IPSIE A1                                          | IPSIE A2                                                              | IPSIE A3                                                          |
-| Single Sign-On               | Required (FAL2)                                   | Same as A2                                                            | Same as A2                                                        |
-| MFA                          | Identity Service-enforced (app doesn't need to do anything). Identity Service communicates MFA level to app.     | Identity Service MUST accept MFA level requests from the app | Same as A2                                                        |
-| Revocation                   | Application MUST match session lifetime to assertion lifetime | App MUST accept session termination requests from Identity Service for individual users            | Same as A2                                                        |
-| Continuous Access (Application->Identity Service)  | None                                              | None                                                                  | App communicates session changes to Identity Service such as IP address change |
-| Continuous Access (Identity Service->Application)  | None                                              | None                                                                  | Identity Service communicates changes in account and device posture to app     |
 
 ### IPSIE Authentication Level A1 - Single Sign-On
 
@@ -52,18 +44,6 @@ Level A3 adds continuous access to the authentication between Identity Service a
 The app communicates session changes to the Identity Service such as IP address change, enabling the Identity Service to be aware of more context around what is happening to users' sessions after the initial sign-in.
 
 The Identity Service communicates changes in the account and device posture to the application, enabling the application to take actions it determines are necessary based on its own policies about these changes.
-
-
-
-## Identity Lifecycle Management
-
-|                              | JIT User Provisioning Control               | User Pre-Provisioning and Deprovisioning Control| 
-|------------------------------|---------------------------------------------|-------------------------------------------------|
-| Requirement                  | IPSIE P1                                    | IPSIE P2                                        |
-| Provisioning Control         | User provisioning MUST be controlled by the enterprise via the Identity Service. <br> Out of band provisioning / self provisioning by users SHALL NOT be allowed. | Same as P1 | 
-| Provisioning                 | JIT-based provisioning MUST be enabled.     | App MUST allow users to be provisioned by the Identity Service prior to sign in. <br> JIT-based provisioning MAY be enabled. |
-| Deprovisioning               | None                                        | App MUST allow users to be deprovisioned by the Identity Service.|
-
 
 ### IPSIE Provisioning Level P1 - JIT User Provisioning Control
 
