@@ -5,7 +5,7 @@
 - *IL* - Identity Lifecycle
 - *E* - Entitlements
 
-Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). Requirements at a lower level may be made OPTIONAL at a higher level if explicitly defined. (e.g. JIT provisioning is required at IL1 and OPTIONAL at IL2). Each set of levels is _independent_ from other levels (e.g. an application may achieve E3 while all other sets are at Level 1).
+Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). Each set of levels is _independent_ from other levels (e.g. an application may achieve E3 while all other sets are at Level 1).
 
 | IPSIE<br>LEVEL|   Applications<br>(aka RP)                                                 |  Identity Services                                                                                             |
 |---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
