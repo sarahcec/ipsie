@@ -68,9 +68,17 @@ MFA mechanisms vary greatly in their security properties.  Enterprises should ch
 
 In a general context, refers to the process of establishing and implementing policies, procedures, and frameworks to effectively manage and control an organization or system. In the context of Identity and Access Management (IAM), governance involves overseeing the use of digital identities and their access to resources across an organization. This includes setting standards, guidelines, and best practices for managing identities and access, as well as defining roles and responsibilities for IAM stakeholders, such as administrators, users, and auditors.
 
+### Phishing Resistant Authentication
+
+Phishing resistant authentication mechanisms are those which effectively prevent remote account access through relayed secrets or assertion. These mechanisms rely on verifier impersonation resistance, achieved through techniques like [verifier name binding](FUTURE LINK) or [channel binding](FUTURE LINK), which block malicious services from impersonating legitimate verifiers. Examples of phishing-resistant authentication mechanisms include FIDO2/WebAuthn and mutual TLS.
+
 ## Protocols
 
 A protocol is a set of rules and guidelines for communicating and exchanging data between different systems or entities. IAM protocols define standardized methods for user authentication, authorization, and access management, and enable different applications and services to interoperate and share identity information. Some of the commonly used IAM protocols include SAML (Security Assertion Markup Language), OAuth (Open Authorization), OpenID Connect, and SCIM (System for Cross-domain Identity Management). These protocols provide a common language and framework for implementing IAM solutions, and help ensure interoperability and compatibility across different systems and applications.
+
+### Continuous Access Evaluation Protocol (CAEP)
+
+TBD
 
 ### OAuth 2.0
 
@@ -83,6 +91,18 @@ A protocol built on top of the OAuth 2.0 framework of specification (IETF RFC 67
 ### SAML
 
 Security Assertion Markup Language (SAML) is an XML-based protocol used for securely exchanging authentication and authorization information between different systems. It enables single sign-on (SSO) by allowing users to authenticate once and gain access to multiple applications or services without needing to log in separately to each one. SAML facilitates interoperability between identity providers and service providers, ensuring that user credentials are not directly shared between systems.
+
+### Risk Information Sharing & Collaboration
+
+TBD
+
+### SAML
+
+TBD
+
+### Shared Signals Framework (SSF)
+
+TBD
 
 ### System for Cross-domain Identity Management (SCIM)
 
