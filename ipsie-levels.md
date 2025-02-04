@@ -12,10 +12,10 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 | SL2           |  - MUST send authentication method requests to the Identity Service <br> - MUST accept & act upon session termination request| - MUST accept authentication method requests from Applications <br> - MUST send session termination requests to Applications |
 | SL3           |  - MUST communicate posture changes to Identity Services<br> - MUST accept posture changes from Identity Services | - MUST communicate posture changes for user and device to the Application <br> - MUST accept posture changes from Applications |
 ||||
-| IL1           |  - MUST support JIT provisioning of users <br> - MUST accept users attributes during provisioning <br> - Out of band provisioning/self provisioning SHALL NOT be allowed | - MUST support JIT provisioning of users <br> - MUST send centrally managed attributes during provisioning |
-| IL2           |  - MUST support pre-provisioning of users by the Identity Services prior to signin <br> - MAY support JIT  provisioning <br> - MUST support deprovisioning of users by Identity Services <br> - MUST support mapping group claims to roles | - MUST support pre-provisioning of users in Applications <br> - MAY support JIT provisioning of users in Applications <br> - MUST support deprovisioning of users in Applications <br> - MUST send selected group claims to Applications |
+| IL1           |  - MUST support JIT provisioning of users via SSO <br> - MUST accept user attributes during provisioning <br> - Out of band provisioning/self provisioning users to the organization SHALL NOT be allowed | |
+| IL2           |  - MUST support pre-provisioning of users by the Identity Services prior to signin<br> - MUST support deprovisioning of users by Identity Services <br> - MUST support mapping group claims to application roles | - MUST send selected group claims to Applications |
 ||||
-| E1            | - MUST support asynchronous pre-provisioning/deprovisioning of groups and group memberships <br> - MUST NOT allow group and group membership provisioning via the application |  - MUST support asynchronous pre-provisioning/deprovisioning of groups and group memberships  |
+| E1            | - MUST support asynchronous pre-provisioning/deprovisioning of groups and group memberships <br> - MUST NOT allow group and group membership management in the application | |
 | E2            | - MUST implement anti-entropy controls for groups and group membership.    | - MUST implement anti-entropy controls for groups and group membership.          |
 
 -----
