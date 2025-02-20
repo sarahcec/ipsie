@@ -34,7 +34,9 @@ The people engaged in work for a particular organization. Employees, contractors
 
 ### Tenant
 
-TBD
+In a multitenant system, a tenant represents an organization or group of consumers, such as partners, customers, business units, departments, projects, or environments (e.g., production or test) within a larger entity. Each tenant has users and resources assigned to them, and only these users can access the resources within their specific tenant. Tenancy can be hierarchical, allowing a parent tenant to have sub-tenants, with resources potentially shared among them.
+
+Isolation between tenants varies along a spectrum based on business needs. At one end, physical resources are shared by trusted parties with minimal disruption, while at the other end, tenants are completely unaware of each other and may have dedicated resources. High-end solutions ensure full privacy between untrusted parties, whereas lower-end solutions allow for reduced isolation among trusted parties sharing a system.
 
 ### User Group
 
@@ -66,13 +68,41 @@ MFA mechanisms vary greatly in their security properties.  Enterprises should ch
 
 In a general context, refers to the process of establishing and implementing policies, procedures, and frameworks to effectively manage and control an organization or system. In the context of Identity and Access Management (IAM), governance involves overseeing the use of digital identities and their access to resources across an organization. This includes setting standards, guidelines, and best practices for managing identities and access, as well as defining roles and responsibilities for IAM stakeholders, such as administrators, users, and auditors.
 
+### Phishing Resistant Authentication
+
+Phishing resistant authentication mechanisms are those which effectively prevent remote account access through relayed secrets or assertion. These mechanisms rely on verifier impersonation resistance, achieved through techniques like [verifier name binding](FUTURE LINK) or [channel binding](FUTURE LINK), which block malicious services from impersonating legitimate verifiers. Examples of phishing-resistant authentication mechanisms include FIDO2/WebAuthn and mutual TLS.
+
 ## Protocols
 
 A protocol is a set of rules and guidelines for communicating and exchanging data between different systems or entities. IAM protocols define standardized methods for user authentication, authorization, and access management, and enable different applications and services to interoperate and share identity information. Some of the commonly used IAM protocols include SAML (Security Assertion Markup Language), OAuth (Open Authorization), OpenID Connect, and SCIM (System for Cross-domain Identity Management). These protocols provide a common language and framework for implementing IAM solutions, and help ensure interoperability and compatibility across different systems and applications.
 
+### Continuous Access Evaluation Protocol (CAEP)
+
+TBD
+
+### OAuth 2.0
+
+OAuth 2.0 is a widely-used authorization (authZ) protocol that enables both first-party and third-party applications to obtain limited access to user resources without exposing user credentials. It is a cornerstone of modern Identity and Access Management (IAM) systems, facilitating secure interactions between users and applications. OAuth 2.0 operates on a token-based mechanism, where an authorization server issues an access token to an application after the user consents. This token allows the application to access specific resources on the user's behalf, such as social media profiles or cloud storage, without requiring the user to share their login details directly with the application. OAuth 2.0 supports a variety of deployment models, making it versatile for different use cases and environments.
+
 ### OpenID Connect (OIDC)
 
 A protocol built on top of the OAuth 2.0 framework of specification (IETF RFC 6749 and 6750), used for authentication purposes. OIDC allows for the exchange of identity information between parties, such as an Identity Service and a relying party (e.g., a web application). It is designed to provide single sign-on (SSO) capabilities, as well as support for user authentication using JSON Web Tokens (JWTs). OIDC is widely used in modern IAM solutions and is supported by many popular Identity Services and service providers.
+
+### SAML
+
+Security Assertion Markup Language (SAML) is an XML-based protocol used for securely exchanging authentication and authorization information between different systems. It enables single sign-on (SSO) by allowing users to authenticate once and gain access to multiple applications or services without needing to log in separately to each one. SAML facilitates interoperability between identity providers and service providers, ensuring that user credentials are not directly shared between systems.
+
+### Risk Information Sharing & Collaboration
+
+TBD
+
+### SAML
+
+TBD
+
+### Shared Signals Framework (SSF)
+
+TBD
 
 ### System for Cross-domain Identity Management (SCIM)
 
