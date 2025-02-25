@@ -11,7 +11,7 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 | SL2           |  - MUST terminate sessions at the request of the Identity Service| - MUST enforce authentication method requests from Application |
 | SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
 ||||
-| IL1           | - Local Create, Update, and Delete of users and the Identity Servive provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
+| IL1           | - Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
 | IL2           |  - MUST support mapping group claims to application roles and capabilities | - MUST synchronize user group membership claims to Application |
 | IL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
 
@@ -37,7 +37,7 @@ The Identity Service communicates changes in the account and device posture to t
 
 ### IPSIE Identity Lifecycle Level IL1 - User and Profile Synchronization
 
-IPSIE Lifecycle Level P1 requires the Identity Service to synchonize with the Application the users that have access to the and their profile data. The Application SHALL NOT independently create, update, or delete users or the provided profile data.
+IPSIE Lifecycle Level P1 requires the Identity Service to synchonize with the Application the users that have access and their profile data. The Application SHALL NOT independently create, update, or delete users or the provided profile data. While an Application may also support support Just In Time (JIT) for account creation using claims in an SSO token, JIT support is NOT a requirement of IPSIE.
 
 ### IPSIE Identity Lifecycle Level IL2 - User Group Membership 
 
