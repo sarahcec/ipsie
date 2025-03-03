@@ -7,31 +7,34 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 
 | IPSIE<br>LEVEL|   Application (aka RP)                                                 |  Identity Service                                                                                             |
 |---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| SL1           |   - MUST meet NIST800-63rev3 FAL2 compliance <br>- Session lifetime MUST match assertion lifetime | - MUST meet NIST800-63rev3 FAL2 Compliance <br> - MUST enforce MFA and communicate an authentication class to the Application |
+| SL1           |   - MUST meet NIST 800-63-4 FAL2 compliance <br>- Session lifetime MUST be set from the assertion | - MUST meet NIST 800-63-4 FAL2 Compliance <br> - MUST enforce MFA and communicate an authentication class to the Application |
 | SL2           |  - MUST terminate sessions at the request of the Identity Service| - MUST enforce authentication method requests from Application |
 | SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
 ||||
-| IL1           | - Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
+| IL1           | - MUST support Create, Update and Delete of users by the Identity Service prior to sign-in <br>- Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
 | IL2           |  - MUST support mapping group claims to application roles and capabilities | - MUST synchronize user group membership claims to Application |
 | IL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
 
 -----
 ### IPSIE Session Lifecycle SL1 - Single Sign-On & Session Lifetime Controls
 
-Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the requirements of [FAL2](https://pages.nist.gov/800-63-4/sp800-63c/fal/).
+Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the requirements of [FAL2 in NIST 800-63-4](https://pages.nist.gov/800-63-4/sp800-63c/fal/). (Note that currently 800-63-4 is in Second Public Draft and may change before final publication. We intend to update the recommendations accordingly if there are relevant changes in the final version.)
 
 The Application respects the session lifetime as communicated by the Identity Service in the assertion, and reauthenticates the user through the Identity Service after the expiration.
 
-### IPSIE Session Lifecycle SL2 - MFA, Logout, & Session Termination
-Level SL2 adds the ability to communicate information about the user's authentication method between Identity Service and Application. The Identity Service includes claims about the authentication level in the assertion to the Application. The Application can request a specific authentication level of the Identity Service.
+The Identity Service MUST communicate information about the user's authentication method at the Identity Service in the SSO assertion.
 
-The Identity Services must be able to communicate a session termination event.  The Application must act upon session termination requests from the Identity Services.
+### IPSIE Session Lifecycle SL2 - MFA, Logout, & Session Termination
+
+Level SL2 adds the ability for the Application to request specific authentication methods when the user logs in at the Identity Service.
+
+The Identity Services MUST be able to communicate a session termination event.  The Application MUST act upon session termination requests from the Identity Services.
 
 ### IPSIE Session Lifecycle SL3 - Continuous Access
 
-Level SL3 adds continuous access to the authentication between Identity Service and application.
+Level SL3 adds continuous access to the authentication between Identity Service and Application.
 
-The app communicates session changes to the Identity Service such as IP address change, enabling the Identity Service to be aware of more context around what is happening to users' sessions after the initial sign-in.
+The Application communicates session changes to the Identity Service such as IP address change, enabling the Identity Service to be aware of more context around what is happening to users' sessions after the initial sign-in.
 
 The Identity Service communicates changes in the account and device posture to the application, enabling the application to take actions it determines are necessary based on its own policies about these changes.  Neither application nor identity services are obliged to act upon any state changes, the policies for responding to state changes are not in scope for SL3.
 
@@ -45,7 +48,7 @@ Level P2 adds the ability for the Identity Service to organize users into groups
 
 ### IPSIE Identity Lifecycle Level IL3 - User Roles
 
-Level P3 adds the ability for the Application to publish the roles that a user may have at the Application, and for the Identity Service to synchronize with the Application which roles each user has.
+Level P3 adds the ability for the Application to publish the roles that exist in the Application to the Identity Service, and for the Identity Service to map these roles to users and synchronize with the Application which roles each user has.
 
 
 
