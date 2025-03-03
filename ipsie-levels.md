@@ -18,7 +18,7 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 -----
 ### IPSIE Session Lifecycle SL1 - Single Sign-On & Session Lifetime Controls
 
-Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the requirements of [FAL2 in NIST 800-63-4](https://pages.nist.gov/800-63-4/sp800-63c/fal/).
+Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the requirements of [FAL2 in NIST 800-63-4](https://pages.nist.gov/800-63-4/sp800-63c/fal/). (Note that currently 800-63-4 is in Second Public Draft and may change before final publication. We intend to update the recommendations accordingly if there are relevant changes in the final version.)
 
 The Application respects the session lifetime as communicated by the Identity Service in the assertion, and reauthenticates the user through the Identity Service after the expiration.
 
@@ -26,7 +26,7 @@ The Identity Service MUST communicate information about the user's authenticatio
 
 ### IPSIE Session Lifecycle SL2 - MFA, Logout, & Session Termination
 
-Level SL2 adds the ability for the Application to request a minimum authentication level when the user logs in at the Identity Service.
+Level SL2 adds the ability for the Application to request specific authentication methods when the user logs in at the Identity Service.
 
 The Identity Services MUST be able to communicate a session termination event.  The Application MUST act upon session termination requests from the Identity Services.
 
