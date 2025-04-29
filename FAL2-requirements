@@ -103,7 +103,40 @@ See the questions at the bottom of the issue regarding non-security requirements
 71. Assertions SHALL use audience restriction techniques to allow an RP to recognize whether or not it is the intended target of an issued assertion. 
 72. All RPs SHALL check that the audience of an assertion contains an identifier for their RP to prevent the injection and replay of an assertion generated for one RP at another RP.
 73. In order to limit the places that an assertion could successfully be replayed by an attacker, IdPs SHOULD issue assertions designated for only a single audience. Restriction to a single audience is required at FAL2 and above.
-74. 
+74. To perform a federation transaction with a general-purpose IdP, the RP SHALL associate the assertion signing keys and other relevant configuration information with the IdP’s identifier, as stipulated by the trust agreement. 
+  a. If these are retrieved over a network connection, request and retrieval SHALL be made over a secure protected channel from a location associated with the IdP’s identifier by the trust agreement. 
+75. Additionally, the RP SHALL register its information either with the IdP or with an authority the IdP trusts, as stipulated by the trust agreement.
+  a. In many federation protocols, the RP is assigned an identifier during this stage, which the RP will use in subsequent communication with the IdP.
+76. The IdP MAY use a trusted third party to facilitate its discovery and registration processes, so long as that trusted third party is identified in the trust agreement.
+77. At all FALs, the cryptographic keys and identifiers of the RP and IdP can be exchanged in a manual process, whereby the administrator of the RP submits the RP’s configuration to the IdP (either directly or through a trusted third party) and receives the identifier to use with that IdP.
+  a. This process MAY be facilitated by some level of automated tooling, whereby the manual configuration points the systems in question to a trusted source of information that can be updated over time. 
+  b. If such automation is used, the trust agreement SHALL enumerate the allowable terms of the cryptographic key distribution and assignment, including allowable cache lifetimes.
+78. At FAL1 and FAL2, the cryptographic keys and identifiers of the RP can be exchanged in a dynamic process, whereby the RP software presents its configuration to the IdP (either directly or through a trusted third party) and receives the identifier to use with that IdP. This process is specific to the federation protocol in use but requires machine readable configuration data to be made available over the network. All transmission of configuration information SHALL be made over a secure protected channel to endpoints associated with the IdP’s identifier by the trust agreement.
+79. IdPs SHOULD consider the risks of information leakage to multiple RP instances and take appropriate countermeasures, such as issuing PPIs to dynamically registered RPs as discussed in Sec. 3.3.1.
+80. Dynamic registration SHOULD be augmented by attestations about the RP software and device, as discussed in Sec. 3.5.3.
+81. The IdP SHALL require the subscriber to have an authenticated session before any of the following events:
+  a. Approval of attribute release
+  b. Creation and issuance of an assertion
+  c. Establishment of a subscriber-driven trust agreement.
+82. In an a priori trust agreement, IdPs MAY establish allowlists of RPs authorized to receive authentication and attributes from the IdP without a runtime decision from the subscriber. 
+  a. When placing an RP on its allowlist, the IdP SHALL confirm that the RP abides the terms of the trust agreement. 
+  b. The IdP SHALL determine which identity attributes are passed to the allowlisted RP upon authentication. 
+  c. IdPs SHALL make allowlists available to subscribers as described in Sec. 7.2.
+  d. IdP allowlists SHALL uniquely identify RPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
+  e. Any entities that share an identifier SHALL be considered equivalent for the purposes of the allowlist. 
+  f. Allowlists SHOULD be as specific as possible to avoid unintentional impersonation of an RP.
+83. IdP allowlist entries for an RP SHALL indicate which attributes are included as part of an allowlisted decision. 
+  a. If additional attributes are requested by the RP, the request SHALL be either:
+    1. subject to a runtime decision of the authorized party to approve the additional attributes requested,
+    2. redacted to only the attributes in the allowlist entry, or
+    3. denied outright by the IdP.
+84. IdP allowlists MAY include other information, such as the xALs under which the allowlist entry is applied.
+85. IdPs MAY establish blocklists of RPs not authorized to receive authentication assertions or attributes from the IdP, even if requested to do so by the subscriber. 
+86. If an RP is on an IdP’s blocklist, the IdP SHALL NOT produce an assertion targeting the RP in question under any circumstances.
+87. IdP blocklists SHALL uniquely identify RPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use. 
+  a. Any entities that share an identifier SHALL be considered equivalent for the purposes of the blocklist.
+
+https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63C-4.2pd.pdf 4.6.1.3
 
 
 
@@ -114,4 +147,5 @@ Open questions:
 4. 3.7.2 covers account resolution.  We need to confirm this is not needed at SL1.
 5. Item 35 above allows for a break glass account.  IPSIE does not yet allow for this, we should consider how IPSIE can support break glass accounts.
 6. I left out the privacy requirements in 3.9.  Should these privacy requirements be met at SL1?
-7. 
+7. Section 4.6 regarding attribute disclosure appears unnecessary in the enterprise context, I have left it out of the requirements for now.
+8. 
