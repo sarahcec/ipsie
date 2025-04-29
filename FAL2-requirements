@@ -1,0 +1,117 @@
+I recently reviewed [NIST SP800-63C rev4 (draft)](https://pages.nist.gov/800-63-4/sp800-63c.html).  Below, I've copied what I believe to be the full set of _security_ requirements_ for an IPSIE SL1 profile to meet FAL2 in the draft guidance.  I have not yet assessed OIDC SL1 against these requirements.  My intent is to document conformance/non-conformance in the r
+
+See the questions at the bottom of the issue regarding non-security requirements such as trust agreements, and privacy.   
+
+- [Table 1](https://pages.nist.gov/800-63-4/sp800-63c.html#table-1) provides an overview of the requirements, I've bolded the FAL2 requirements:
+
+| **Requirement**	| **FAL1** | **FAL2** | **FAL3**| 
+|--------------|------|------|------|
+|Audience Restriction | Multiple RPs allowed per assertion, Single RP per assertion recommended	| **Single RP per assertion** | Single RP per assertion |
+| Injection Protection | Recommended for all transactions | **Required; transaction begins at the RP** | Required; transaction begins at the RP |
+| Trust Agreement Establishment	| Subscriber-driven or A priori | **A priori** | A priori |
+| Identifier and Key Establishment | 	Dynamic or Static | 	**Dynamic or Static** |	Static |
+|Presentation | Bearer Assertion | **Bearer Assertion** | Holder-of-Key Assertion or Bound Authenticator|
+
+1. At all FALs, the RP needs to trust the IdP to provide valid assertions representing the subscriber’s authentication event and SHALL validate the assertion.
+2. IdPs and RPs SHALL employ appropriately tailored security controls from the moderate baseline security controls defined in [[SP800-53]](https://pages.nist.gov/800-63-4/sp800-63c.html#ref-SP800-53) or an equivalent federal (e.g., [[FEDRAMP]](https://pages.nist.gov/800-63-4/sp800-63c.html#ref-FEDRAMP)) or industry standard that the organization has determined for the information systems, applications, and online services that these guidelines are used to protect.
+3. IdPs and RPs SHALL ensure that the minimum assurance-related controls for the appropriate systems, or equivalent, are satisfied. Additional security controls are discussed in [Sec. 3.10](https://pages.nist.gov/800-63-4/sp800-63c.html#security-controls).
+4. FAL2 provides a high level of protection for federation transactions, providing protections against a variety of attacks against federated systems. All the requirements for FAL1 apply at FAL2 except where overridden by more specific or stringent requirements here.
+  a. At FAL1, the IdP SHALL sign the assertion using approved cryptography. 
+  b. The RP SHALL validate the signature using the key associated with the expected IdP.
+  c.  The RP SHALL validate that it is one of the targeted RPs for the given assertion.
+  d.  At FAL1, the trust agreement MAY be established by the subscriber during the federation transaction. Note that at FAL1, it is still possible for the trust agreement to be established a priori by the RP and IdP.
+5. At FAL2, the assertion SHALL be strongly protected from injection attacks, as discussed in [Sec. 3.10.1](https://pages.nist.gov/800-63-4/sp800-63c.html#injection-protection). The federation transaction SHALL be initiated by the RP.
+6.  At FAL2, the assertion SHALL audience restricted to a single RP.
+7.  At FAL2, an a priori trust agreement SHALL be established prior to the federation transaction taking place.
+8. IdPs SHALL support a mechanism for RPs to specify a set of minimum acceptable xALs as part of the trust agreement and SHOULD support the RP specifying a more strict minimum set at runtime as part of the federation transaction. 
+9. When an RP requests a particular xAL, the IdP SHOULD fulfill that request, if possible, and SHALL indicate the resulting xAL in the assertion. 
+10. The IdP SHALL inform the RP of the following information for each federation transaction:
+  a. The IAL of the subscriber account being presented to the RP, or an indication that no IAL claim is being made
+  b. The AAL of the currently active session of the subscriber at the IdP, or an indication that no AAL claim is being made
+  c. The FAL of the federation transaction
+11. If the xAL is unchanging for all messages between the IdP and RP, the xAL information SHALL be included in the terms of the trust agreement between the IdP and RP.
+12. The IdP MAY indicate that no claim is made to the IAL or AAL for a given federation transaction. In such cases, no default value is assigned to the resulting xAL by the RP. 
+13. The RP SHALL determine the minimum IAL, AAL, and FAL it is willing to accept for access to any offered functionality. 
+14. An RP MAY vary its functionality based on the IAL, AAL, and FAL of a specific federated authentication. 
+15. The RP SHALL ensure that it meets its obligations in the federation transaction for the FAL declared in the assertion. 
+16. The subscriber SHALL be identified in the federation transaction using a federated identifier unique to that subscriber. A federated identifier is the logical combination of a subject identifier, representing a subscriber account, and an issuer identifier, representing the IdP. The subject identifier is assigned by the IdP, and the issuer identifier is assigned to the IdP usually through configuration.
+17. Federated identifiers SHALL contain no plaintext personally-identifiable information (PII), such as usernames, email addresses, or employee numbers, etc.
+18. The discovery and registration processes SHALL be established in a secure fashion as defined by the trust agreement governing the transaction. Protocols requiring the transfer of cryptographic key information SHALL use an authenticated protected channel to exchange cryptographic key information needed to operate the federated relationship, including any shared secrets or public keys. Any symmetric keys used in this relationship SHALL be unique to a pair of federation participants.
+19. When domain names, URIs, or other structured identifiers are used to identify parties, wildcards SHALL NOT be used. 
+20. The allowable update process for any cryptographic keys and identifiers SHALL be defined by the trust agreement and SHALL be executed using an authenticated protected channel, as in the initial cryptographic key establishment.
+21. CSPs, IdPs (including subscriber-controlled wallets), and RPs SHALL store all private and shared keys used for signing, encryption, and any other cryptographic operations in a secure fashion. 
+22. A subscriber’s attributes SHALL be transmitted between IdP and RP only for federation transactions or support functions such as identification of compromised subscriber accounts as discussed in [Sec. 3.9](https://pages.nist.gov/800-63-4/sp800-63c.html#privacy-reqs). 
+23. A subscriber’s attributes SHALL NOT be transmitted for any other purposes, even when parties are allowlisted.
+24. A subscriber’s attributes SHALL NOT be used by the RP for purposes other than those stipulated in the trust agreement. 
+25. A subscribers attributes SHALL be stored and managed in accordance with [Sec. 3.10.3](https://pages.nist.gov/800-63-4/sp800-63c.html#store-subscriber-info).
+26. The subscriber SHALL be informed of the transmission of attributes to an RP. 
+27. In the case where the authorized party is the organization, the organization SHALL make available to the subscriber the list of approved RPs and the associated sets of attributes sent to those RPs. 
+28. The RP subscriber account SHALL be bound to at least one federated identifier, and a given federated identifier is bound to only one RP subscriber account at a given RP.
+29. An RP subscriber account is terminated when the RP removes all access to the account at the RP. Termination SHALL include removal of all federated identifiers and bound authenticators from the RP subscriber account (to prevent future federation transactions) as well as removal of attributes and information associated with the account in accordance with [Sec. 3.10.3](https://pages.nist.gov/800-63-4/sp800-63c.html#store-subscriber-info). 
+30. An RP MAY terminate an RP subscriber account independently from the IdP for a variety of reasons, regardless of the current validity of the subscriber account from which it is derived.
+31. A single RP subscriber account MAY be associated with more than one federated identifier. This practice is sometimes known as account linking. 
+  a. If the RP allows a subscriber to manage multiple accounts in this way, the RP SHALL require an authenticated session with the subscriber account for all management and linking functions. 
+  b. This authenticated session SHOULD require one existing federated identifier before linking the new federated identifier to the RP subscriber account. 
+  c. An RP MAY offer a means of recovery of an RP subscriber account with no current means of access.
+32. When a federated identifier is removed from an RP subscriber account, the RP SHALL disallow access to the RP subscriber account from the removed federated identifier.
+33. The RP SHALL document its practices and policies that it enacts when an RP subscriber account reaches a state of having zero associated federated identifiers, no means of access, and no means of recovery. 
+  a. In such cases, the RP subscriber account SHOULD be terminated and information associated with the account in accordance with [Sec. 3.10.3](https://pages.nist.gov/800-63-4/sp800-63c.html#store-subscriber-info).
+34. The RP SHALL provide notice to the subscriber when:
+  a. A new federated identifier is added to an existing RP subscriber account
+  b. A federated identifier is removed from an RP subscriber account, but the account is not terminated
+35. The RP MAY allow a subscriber to access their RP subscriber account using direct authentication processes by allowing the subscriber to add and remove authenticators in the RP subscriber account.
+36. An authenticated session SHALL be created by the RP only when the following conditions are true:
+  a. The RP has processed and verified a valid assertion
+  b. The assertion is from the expected IdP for a transaction
+  c. The IdP that issued the assertion is the IdP identified in the federated identifier of the assertion
+  d. The assertion is associated with an RP subscriber account (which may be ephemeral)
+  e. The RP subscriber account has been provisioned at the RP through the method specified in the trust agreement
+37. The IdP and RP SHALL employ appropriately tailored security controls from the moderate baseline security controls defined in [[SP800-53]](https://pages.nist.gov/800-63-4/sp800-63c.html#ref-SP800-53) or equivalent federal (e.g., [[FEDRAMP]](https://pages.nist.gov/800-63-4/sp800-63c.html#ref-FEDRAMP)) or industry standard that the organization has determined for the information systems, applications, and online services that these guidelines are used to protect. 
+38. The IdP and RP SHALL ensure that the minimum assurance-related controls for the appropriate systems, or equivalent, are satisfied.
+39. Communications between the IdP and the RP SHALL be protected in transit using an authenticated protected channel.
+40. Communications between the subscriber and either the IdP or the RP (usually through a user agent) SHALL be made using an authenticated protected channel.
+41. Additional attributes about the user MAY be included outside of the assertion itself by use of authorized access to an identity API as discussed in [Sec. 3.11.3](https://pages.nist.gov/800-63-4/sp800-63c.html#s-identity-api).
+42. When derived attribute values are available and fulfill the RP’s needs, the RP SHOULD request derived attribute values rather than full attribute values as described in [Sec. 7.3](https://pages.nist.gov/800-63-4/sp800-63c.html#minimization). 
+43. The IdP SHOULD support derived attribute values to the extent the underlying federation protocol allows.
+44. The IdP and RP SHALL delete personal identity information in the subscriber account and RP subscriber account (respectively) upon account termination, unless required otherwise by legal action or policy.
+45.  Whenever personal identity information is stored in a subscriber account or RP subscriber account, whether the account is active or not, the IdP and RP SHALL determine and use appropriate controls to ensure secure storage of the personal identity information.
+46. When the RP uses an ephemeral provisioning mechanism as described in [Sec. 4.6.3](https://pages.nist.gov/800-63-4/sp800-63c.html#provisioning), the RP SHALL remove all subscriber attributes at the termination of the session, unless required by legal action or policy.
+47. Attributes SHALL be either unbundled (presented directly by the IdP) or bundled into a package that is cryptographically signed by the CSP, as described in [Sec. 3.11.1](https://pages.nist.gov/800-63-4/sp800-63c.html#attribute-bundles).
+48. Attributes SHALL be either attribute values (e.g., a date of birth) or derived attribute values (e.g., an indication of age of majority).
+49. Attributes SHALL be either presented in the assertion (and therefore covered by the assertion’s signature) or made available as part of a protected identity API.
+50. Attributes about the subscriber, including profile information, MAY be provided to the RP through a protected API known as the identity API.
+51. All possible use of identity APIs, including which provisioning models are available through the API, SHALL be recorded and disclosed as part of the trust agreement. 
+52. Access to the identity API SHALL be time limited by the trust agreement. 
+53. Access to the identity API SHOULD be limited to the duration of the federation transaction plus time necessary for synchronization of attributes, as discussed in [Sec. 4.6.4](https://pages.nist.gov/800-63-4/sp800-63c.html#attribute-sync). 
+54. Since the time limitation is separate from the validity time window of the assertion and the lifetime of the authenticated session at the RP, access to an identity API by the RP without an associated valid assertion SHALL NOT be sufficient for the establishment of an authenticated session at the RP.
+55. [W]hen access to the identity API is granted within the context of a federation transaction, the attributes provided by an identity API SHALL be associated with only the single subscriber identified in the associated assertion. 
+56. If the identity API is hosted by the IdP, the returned attributes SHALL include the subject identifier for the subscriber. This allows the RP to positively correlate the assertion’s subject to the returned attributes. 
+57. For pre-provisioning use cases, the privacy considerations SHALL be evaluated and recorded as part of the trust agreement. 
+58. Assertions SHALL include a set of protections to prevent attackers from manufacturing valid assertions or reusing captured assertions at disparate RPs.
+59. Assertions SHALL be sufficiently unique to permit unique identification by the target RP. Assertions MAY accomplish this by use of an embedded nonce, issuance timestamp, assertion identifier, or a combination of these or other techniques.
+60. Assertions SHALL be cryptographically signed by the issuer (IdP). 
+61. The RP SHALL validate the digital signature or MAC of each such assertion based on the issuer’s key. 
+62. This signature SHALL cover the entire assertion, including its identifier, issuer, audience, subject, and expiration.
+63. The assertion signature SHALL either be a digital signature using asymmetric keys or a MAC using a symmetric key shared between the RP and issuer. 
+64. Shared symmetric keys used for this purpose by the IdP SHALL be independent for each RP to which they send assertions, and are normally established during registration of the RP.
+65. Public keys for verifying digital signatures SHALL be transferred to the RP in a secure manner, and MAY be fetched by the RP in a secure fashion at runtime, such as through an HTTPS URL hosted by the IdP. 
+66. Approved cryptography SHALL be used.
+67. When encrypting assertions, the IdP SHALL encrypt the contents of the assertion using either the RP’s public key or a shared symmetric key. 
+68. Shared symmetric keys used for this purpose by the IdP SHALL be independent for each RP to which they send assertions, and are normally established during registration of the RP. 
+69. Public keys for encryption SHALL be transferred over an authenticated protected channel and MAY be fetched by the IdP at runtime, such as through an HTTPS URL hosted by the RP.
+70. All encryption of assertions SHALL use approved cryptography applied to the federation technology in use.
+71. Assertions SHALL use audience restriction techniques to allow an RP to recognize whether or not it is the intended target of an issued assertion. 
+72. All RPs SHALL check that the audience of an assertion contains an identifier for their RP to prevent the injection and replay of an assertion generated for one RP at another RP.
+73. In order to limit the places that an assertion could successfully be replayed by an attacker, IdPs SHOULD issue assertions designated for only a single audience. Restriction to a single audience is required at FAL2 and above.
+74. 
+
+
+
+Open questions: 
+1. I explicitly left out federation proxies, do we need to pull these into the requirements?
+2. I left our pairwise pseudonymous identifiers (section 3.3.1) since I felt it was irrelevant to the enterprise use case.  Is this necessary for IPSIE SL1?
+3. How should IPSIE deal with trust agreements?  My initial thought is that these are implicit through the business relationship between identity services and applications as defined by the enterprise.  3.4 states, "Establishment of a trust agreement is required for all federation transactions, even those in which the roles and applications exist within a single security domain or shared legal ownership. _**In such cases, the establishment of the trust agreement can be an internal process and does not need to involve a formal agreement.**_ Even in such cases, it is still required for the IdP to document and disclose the trust agreement to the subscriber upon request."
+4. 3.7.2 covers account resolution.  We need to confirm this is not needed at SL1.
+5. Item 35 above allows for a break glass account.  IPSIE does not yet allow for this, we should consider how IPSIE can support break glass accounts.
+6. I left out the privacy requirements in 3.9.  Should these privacy requirements be met at SL1?
+7. 
