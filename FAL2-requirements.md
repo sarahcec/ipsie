@@ -114,10 +114,15 @@ See the questions at the bottom of the issue regarding non-security requirements
 78. At FAL1 and FAL2, the cryptographic keys and identifiers of the RP can be exchanged in a dynamic process, whereby the RP software presents its configuration to the IdP (either directly or through a trusted third party) and receives the identifier to use with that IdP. This process is specific to the federation protocol in use but requires machine readable configuration data to be made available over the network. All transmission of configuration information SHALL be made over a secure protected channel to endpoints associated with the IdP’s identifier by the trust agreement.
 79. IdPs SHOULD consider the risks of information leakage to multiple RP instances and take appropriate countermeasures, such as issuing PPIs to dynamically registered RPs as discussed in Sec. 3.3.1.
 80. Dynamic registration SHOULD be augmented by attestations about the RP software and device, as discussed in Sec. 3.5.3.
+
+*Section 4.5*
+
 81. The IdP SHALL require the subscriber to have an authenticated session before any of the following events:
   a. Approval of attribute release
   b. Creation and issuance of an assertion
   c. Establishment of a subscriber-driven trust agreement.
+
+*Section 4.6*
 82. In an a priori trust agreement, IdPs MAY establish allowlists of RPs authorized to receive authentication and attributes from the IdP without a runtime decision from the subscriber. 
   a. When placing an RP on its allowlist, the IdP SHALL confirm that the RP abides the terms of the trust agreement. 
   b. The IdP SHALL determine which identity attributes are passed to the allowlisted RP upon authentication. 
@@ -125,16 +130,53 @@ See the questions at the bottom of the issue regarding non-security requirements
   d. IdP allowlists SHALL uniquely identify RPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
   e. Any entities that share an identifier SHALL be considered equivalent for the purposes of the allowlist. 
   f. Allowlists SHOULD be as specific as possible to avoid unintentional impersonation of an RP.
+  
 83. IdP allowlist entries for an RP SHALL indicate which attributes are included as part of an allowlisted decision. 
   a. If additional attributes are requested by the RP, the request SHALL be either:
     1. subject to a runtime decision of the authorized party to approve the additional attributes requested,
     2. redacted to only the attributes in the allowlist entry, or
     3. denied outright by the IdP.
+       
 84. IdP allowlists MAY include other information, such as the xALs under which the allowlist entry is applied.
 85. IdPs MAY establish blocklists of RPs not authorized to receive authentication assertions or attributes from the IdP, even if requested to do so by the subscriber. 
 86. If an RP is on an IdP’s blocklist, the IdP SHALL NOT produce an assertion targeting the RP in question under any circumstances.
 87. IdP blocklists SHALL uniquely identify RPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use. 
   a. Any entities that share an identifier SHALL be considered equivalent for the purposes of the blocklist.
+88. Every RP that is in a trust agreement with an IdP but not on an allowlist with that IdP SHALL be governed by a default policy in which runtime authorization decisions will be made by an authorized party identified by the trust agreement.
+89. When processing a runtime decision, the IdP prompts the authorized party interactively during the federation transaction. The authorized party provides consent to release an authentication assertion and specific attributes to the RP. The IdP SHALL provide the authorized party with explicit notice and prompt them for positive confirmation before any attributes about the subscriber are transmitted to the RP.
+  a. At a minimum, the notice SHOULD be provided by the party in the position to provide the most effective notice and obtain confirmation, consistent with Sec. 7.2.
+  b. The IdP SHALL disclose which attributes will be released to the RP if the transaction is approved.
+  c. If the federation protocol in use allows for optional or selective attribute disclosure at runtime, the authorized party SHALL be given the option to decide whether to transmit specific attributes to the RP without terminating the federation transaction entirely.
+  d. If the authorized party is the subscriber, the IdP SHALL provide mechanisms for the subscriber to view the attribute values and derived attribute values to be sent to the RP.
+  e. To mitigate the risk of unauthorized exposure of sensitive information (e.g., shoulder surfing), the IdP SHALL, by default, mask sensitive information displayed to the subscriber.
+90. An IdP MAY employ mechanisms to remember and re-transmit the same set of attributes to the same RP, remembering the authorized party’s decision. This mechanism is associated with the subscriber account as managed by the IdP.
+  a. If such a mechanism is provided, the IdP SHALL allow the authorized party to revoke such remembered access at a future time.
+91. RPs MAY establish allowlists of IdPs from which the RP will accept authentication and attributes without a runtime decision from the subscriber to use the IdP.
+  a. When placing an IdP in its allowlist, the RP SHALL confirm that the IdP abides by the terms of the trust agreement.
+92. RP allowlists SHALL uniquely identify IdPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
+93. RP allowlist entries MAY be applied based on aspects of the subscriber account (such as the xALs required for the transaction).
+94. RPs MAY also establish blocklists of IdPs that the RP will not accept authentication or attributes from, even when requested by the subscriber.
+95. RP blocklists SHALL uniquely identify IdPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
+96. Every IdP that is in a trust agreement with an RP but not on an allowlist with that RP SHALL be governed by a default policy in which runtime authorization decisions will be made by the authorized party indicated in the trust agreement.
+97. The RP MAY employ mechanisms to remember the authorized party’s decision to use a given IdP. S
+  a. If such a mechanism is provided, the RP SHALL allow the authorized party to revoke such remembered options at a future time.
+98. The RP subscriber account SHALL be provisioned at the RP prior to the establishment of an authenticated session at the RP in one of the following ways
+  a. Just-In-Time Provisioning: An RP subscriber account is created automatically the first time the RP receives an assertion with an unknown federated identifier from an IdP. Any identity attributes learned during the federation process, either within the assertion or through an identity API as discussed in Sec. 3.11.3, MAY be associated with the RP subscriber account.
+  b. the RP SHALL be responsible for managing any cached attributes it might have. See Fig. 7.
+  c. Pre-provisioning: Pre-provisioned accounts SHALL be bound to a federated identifier at the time of provisioning. 
+  d. In this model, the RP also receives attributes about subscribers who have not yet interacted with the RP (and who may never do so). This is in contrast to other models, where the RP receives information only about the subset of subscribers that use the RP, and then only after the subscriber uses the RP for the first time. The privacy considerations of the RP having access to this information prior to a federation transaction SHALL be accounted for in the trust agreement.
+99. All organizations SHALL document their provisioning models as part of their trust agreement.
+100. The RP MAY additionally collect, and optionally verify, other attributes to associate with the RP subscriber account, as discussed in Sec. 4.6.6.
+101. The IdP SHOULD signal downstream RPs when the attributes of a subscriber account available to the RP have been updated, and the RP MAY respond to this signal by updating the attributes in the RP subscriber account. 
+102. If the RP is granted access to an identity API as in Sec. 3.11.3, the IdP SHOULD allow the RP access to the API for sufficient time to perform synchronization operations after the federation transaction has concluded.
+103. The IdP SHOULD signal downstream RPs when a subscriber account is terminated, or when the subscriber account’s access to an RP is revoked. 
+  a. Upon receiving such a signal, the RP SHALL process the RP subscriber account as stipulated in the trust agreement.
+  b. If the RP subscriber account is terminated, the RP SHALL remove all personal information associated with the RP subscriber account, in accordance with Sec. 3.10.3.
+  c. If the reason for termination is suspicious or fraudulent activity, the IdP SHALL include this reason in its signal to the RP to allow the RP to review the account’s activity at the RP for suspicious activity, if specified in the trust agreement with that RP.
+
+
+  
+
 
 https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63C-4.2pd.pdf 4.6.1.3
 
