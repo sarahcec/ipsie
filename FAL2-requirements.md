@@ -16,34 +16,55 @@ _N.B. I deleted sections that are not required by IPSIE, e.g. Section 2.4 FAL3. 
 
 **SECTION 2.2 Federation Assurance Level 1 (FAL1)**
 - At FAL1, the IdP SHALL sign the assertion using approved cryptography.
+  - **OIDC SL1:** OIDC SL1 Draft §3.2 meets the requirement.   
 - The RP SHALL validate the signature using the key associated with the expected IdP. The signature protects the integrity of the assertion contents and allows for the IdP to be verified as the source of the assertion.
+  - **OIDC SL1:** Requires validation per OIDC §3.1.3.7 https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation.
 - All assertions at FAL1 SHALL be audience-restricted to a specific RP or set of RPs, and the RP SHALL validate that it is one of the targeted RPs for the given assertion.
+  - **OIDC SL1:** OIDC SL1 Draft §3.3.1 meets the requirement.
 - At FAL1, the trust agreement MAY be established by the subscriber during the federation transaction.
+  - **OIDC SL1:** OIDC SL1 Draft §3.3.1 meets the requirement by requiring pre-registered clients/no dynamic registration.
 - At FAL1, the federation protocol SHOULD apply injection protection as discussed in Sec. 3.10.1.
+  - **OIDC SL1:** OIDC SL1 Draft uses the back channel as discussed in NIST800-63C 3.10.1 and 4.11.1 as sufficient protection.
 - The federation transaction SHOULD be initiated by the RP.
+  - **OIDC SL1:** OIDC SL1 Draft §3.3.2 requires support of third party initiated login (§4 of OIDC Core). 
 
 **SECTION 2.3 Federation Assurance Level 2 (FAL2)**
-- At FAL2, the assertion SHALL be strongly protected from injection attacks, as discussed in Sec. 3.10.1. The federation transaction SHALL be initiated by the RP.
+- At FAL2, the assertion SHALL be strongly protected from injection attacks, as discussed in Sec. 3.10.1.
+  - **OIDC SL1:** OIDC SL1 Draft uses the back channel as discussed in NIST800-63C 3.10.1 and 4.11.1 as sufficient protection.
+- The federation transaction SHALL be initiated by the RP.
+  - **OIDC SL1:** OIDC SL1 Draft §3.3.2 requires support of third party initiated login (§4 of OIDC Core). 
 - At FAL2, the assertion SHALL audience restricted to a single RP.
+  - **OIDC SL1:** OIDC SL1 Draft §3.3.1 meets the requirement.
 - At FAL2, an a priori trust agreement SHALL be established prior to the federation transaction taking place.
-- IdPs operated by or on behalf of federal agencies that present assertions at FAL2 or higher SHALL protect keys used for signing or encrypting those assertions with mechanisms validated at [FIPS140] Level 1 or higher.
+  - **OIDC SL1:** OIDC SL1 Draft §3.3.1 meets the requirement by requiring pre-registered clients/no dynamic registration. 
 
 **SECTION 2.4 Federation Assurance Level 3 (FAL3)**
 _Skipped as irrelevant to IPSIE SL1_
 
 **SECTION 2.5 Requesting and Processing xALs**
 - IdPs SHALL support a mechanism for RPs to specify a set of minimum acceptable xALs as part of the trust agreement and SHOULD support the RP specifying a more strict minimum set at runtime as part of the federation transaction.
-- When an RP requests a particular xAL, the IdP SHOULD fulfill that request, if possible, and SHALL indicate the resulting xAL in the assertion. 
+  - **OIDC SL1:** This is implicit in IPSIE for AAL and FAL. IPSIE SL1 requires multifactor authentication, meeting AAL2.  IPSIE compliant services must meet FAL2.  IAL is not specified in IPSIE and no minimum is required.
+- When an RP requests a particular xAL, the IdP SHOULD fulfill that request, if possible, and SHALL indicate the resulting xAL in the assertion.
+  - **OIDC SL1:** IPSIE does not require IdPs to meet this requirement.
 - The IdP SHALL inform the RP of the following information for each federation transaction:
   - The IAL of the subscriber account being presented to the RP, or an indication that no IAL claim is being made
+    - **OIDC SL1:** TBD
   - The AAL of the currently active session of the subscriber at the IdP, or an indication that no AAL claim is being made
+    - **OIDC SL1:** IPSIE does not require the AAL to be transmitted directly, however, it can be inferred as AAL2 when using IPSIE compliant services.  The AAL may be derived from the `amr` and `acr` claims, as well.
   - The FAL of the federation transaction
+    - **OIDC SL1:** IPSIE compliant services are FAL2 compliant by default. This may be inferred from the trust agreement.
 - The RP gets this xAL information from a combination of the terms of the trust agreement as described in Sec. 3.4 and information included in the assertion as described in Sec. 4.9 and Sec. 5.8. If the xAL is unchanging for all messages between the IdP and RP, the xAL information SHALL be included in the terms of the trust agreement between the IdP and RP.
+  - **OIDC SL1:** TBD - do we need to document an IPSIE trust agreement?
 - If the xAL could be within a range of possible values specified by the trust agreement, the xAL information SHALL be included as part of the assertion contents.
+  - **OIDC SL1:** TBD
 - The IdP MAY indicate that no claim is made to the IAL or AAL for a given federation transaction. In such cases, no default value is assigned to the resulting xAL by the RP. That is to say, a federation transaction without an IAL declaration in either the trust agreement or the assertion is functionally considered to have “no IAL” and the RP cannot assume the account meets “IAL1”, the lowest numbered IAL described in this suite.
+  - **OIDC SL1:** TBD
 - The RP SHALL determine the minimum IAL, AAL, and FAL it is willing to accept for access to any offered functionality.
+  - **OIDC SL1:** TBD
 - An RP MAY vary its functionality based on the IAL, AAL, and FAL of a specific federated authentication.
+  - **OIDC SL1:** IPSIE does not constrain the RP's functionality.
 - The RP SHALL ensure that it meets its obligations in the federation transaction for the FAL declared in the assertion. For example, the RP needs to ensure the presentation method meets the injection protection requirements at FAL2 and above, and that the appropriate bound authenticator is presented at FAL3.
+  - **OIDC SL1:** If all components meet IPSIE SL1 or above, this requirement is met.
 
 **Section 3 Common Federation Requirements**
 
