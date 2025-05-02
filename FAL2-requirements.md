@@ -81,9 +81,9 @@ _TBD - I don't believe we have discussed this pattern in IPSIE SL1. -dhs_
   
 **Section 3.3 Federated Identifiers**
 - The subscriber SHALL be identified in the federation transaction using a federated identifier unique to that subscriber. A federated identifier is the logical combination of a subject identifier, representing a subscriber account, and an issuer identifier, representing the IdP. The subject identifier is assigned by the IdP, and the issuer identifier is assigned to the IdP usually through configuration.
-  - **OIDC SL1:** TBD
+  - **OIDC SL1:** `sub` claim of the ID token meets this requirement.
 -Federated identifiers SHALL contain no plaintext personally-identifiable information (PII), such as usernames, email addresses, or employee numbers, etc.
-  - **OIDC SL1:** TBD
+  - **OIDC SL1:** `sub` claim of the ID token meets this requirement.
 
 **Section 3.3.1 Pairwise Pseudonymous Identifiers (PPI)**
 
