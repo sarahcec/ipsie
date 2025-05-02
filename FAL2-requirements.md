@@ -10,9 +10,13 @@ _N.B. I deleted sections that are not required by IPSIE, e.g. Section 2.4 FAL3. 
 
 **SECTION 2.1 Common FAL Requirements**
 - At all FALs, all federation transactions SHALL comply with the requirements in Sec. 3 to deliver an assertion to the RP and create an authenticated session at the RP. 
+  - **OIDC SL1:** To be verified below.
 - At all FALs, the RP needs to trust the IdP to provide valid assertions representing the subscriber’s authentication event and SHALL validate the assertion.
+  - **OIDC SL1:** To be verified below.
 - IdPs and RPs SHALL employ appropriately tailored security controls from the moderate baseline security controls defined in [SP800-53] or an equivalent federal (e.g., [FEDRAMP]) or industry standard that the organization has determined for the information systems, applications, and online services that these guidelines are used to protect.
+  - **OIDC SL1:** Not enforced through SL1. **TODO** Add normative language to the OIDC SL1 profile.
 - IdPs and RPs SHALL ensure that the minimum assurance-related controls for the appropriate systems, or equivalent, are satisfied. Additional security controls are discussed in Sec. 3.10.
+  - **OIDC SL1:** 
 
 **SECTION 2.2 Federation Assurance Level 1 (FAL1)**
 - At FAL1, the IdP SHALL sign the assertion using approved cryptography.
