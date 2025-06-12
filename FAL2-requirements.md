@@ -616,19 +616,25 @@ _Other_
 - The IdP ending the subscriber’s session at the IdP will not necessarily cause any sessions that subscriber might have at downstream RPs to end as well. The RP and IdP MAY communicate end-session events to each other, if supported by the federation protocol or through shared signaling (see Sec. 4.8).
 - At the time of a federated transaction request, the subscriber could have a pre-existing authenticated session at the IdP which MAY be used to generate an assertion to the RP.
   - The IdP SHALL communicate to the RP any information the IdP has regarding the time of the subscriber’s latest authentication event at the IdP, and the RP MAY use this information in making authorization and access decisions.
-  - - **OIDC SL1:** OIDC `auth_time` claim is required.
+  - - **OIDC SL1:** OIDC `auth_time` claim is required.  An [issue](https://github.com/openid/ipsie/issues/89) has been filed.
      
   - Depending on the capabilities of the federation protocol in use, the IdP SHOULD allow the RP to request that the subscriber provide a fresh authentication at the IdP instead of using the existing session at the IdP. For example, suppose the subscriber authenticates at the IdP for one transaction. Then, 30 min later, the subscriber starts a federation transaction at the RP. Depending on xAL requirements, the subscriber’s existing session at the IdP can be used to avoid prompting the subscriber for their authenticators. The resulting assertion to the RP will indicate that the last time the subscriber had authenticated to the RP was 30 min in the past. The RP can then use this information to determine whether this is reasonable for the RP’s needs, and, if possible within the federation protocol, request the IdP to prompt the subscriber for a fresh authentication event instead.
- 
+  - **OIDC SL1:** Supported by OIDC with `prompt=login` as a request param to the OP.
 
-- An RP requiring authentication through a federation protocol SHALL specify the maximum acceptable authentication age to the IdP, either through the federation protocol (if possible) or through the terms of the trust agreement.
+  - An RP requiring authentication through a federation protocol SHALL specify the maximum acceptable authentication age to the IdP, either through the federation protocol (if possible) or through the terms of the trust agreement.
+  - **OIDC SL1:** `max_age` claim is required - https://github.com/openid/ipsie/issues/90
   - The authentication age represents the time since the last authentication event in the subscriber’s session at the IdP, and the IdP SHALL reauthenticate the subscriber if they have not been authenticated within that time period.
   - The IdP SHALL communicate the authentication event time to the RP to allow the RP to decide if the assertion is sufficient for authentication at the RP and to determine the time for the next reauthentication event.
+  - - **OIDC SL1:** See https://github.com/openid/ipsie/issues/89
 - If an RP is granted access to an identity API at the same time the RP receives an assertion, the lifetime of the access to the identity API is independent from the lifetime of the assertion. As a consequence, the RP’s ability to successfully fetch additional attributes through an identity API SHALL NOT be used to establish a session at the RP.
+- - **OIDC SL1:** Being resovled by the enterprise extensions work.  See https://github.com/openid/ipsie/issues/60
   - Likewise, inability to access an identity API SHOULD NOT be used to end the session at the RP.
 - The RP MAY terminate its authenticated session with the subscriber or restrict access to the RP’s functions if the assertion, authentication event, or attributes do not meet the RP’s requirements. For example, if an RP is configured to allow access to certain high-risk functionality only if the federation transaction was at FAL3, but the incoming assertion only meets the requirements for FAL2, the RP could decide to deny access to the high-risk functionality while allowing access to lower-risk functionality, or the RP could choose to terminate the session entirely.
   
 **Section 4.8 Shared Signaling**
+
+**OIDC SL1** N/A at this level.
+
 - In some environments, it is useful for the IdP and RP to send information to each other outside of the federation transaction. These signals can communicate important changes in state between parties that would not be otherwise known. The use of any shared signaling SHALL be documented in the trust agreement between the IdP and RP.
   - Signaling from the IdP to the RP SHALL require an apriori trust agreement.
   - Signaling from the RP to the IdP MAY be used in both apriori and subscriber-driven trust agreements.
@@ -662,10 +668,13 @@ _Other_
   - Authentication time: A timestamp indicating when the IdP last verified the presence of the subscriber at the IdP through a primary authentication event.
   - Nonce: A cryptographic nonce, if one is provided by the RP.
   - Signature: Digital signature or message authentication code (MAC), including key identifier, covering the entire assertion.\
+ - **OIDC SL1** All of these requirements are met or have been documented for resolution.
+- 
 - All assertions SHALL contain sufficient information to determine the following aspects of the federation transaction:
   - The IAL of the subscriber account being represented in the assertion, or an indication that no IAL is asserted.
   - The AAL used when the subscriber authenticated to the IdP, or an indication that no AAL is asserted.
   - The IdP’s intended FAL of the federation process represented by the assertion.
+  - **OIDC SL1** N/A for IPSIE
 
 _FAL3 requirements deleted_
 
@@ -681,7 +690,10 @@ _FAL3 requirements deleted_
   - Audience restriction: ensuring that this RP is the intended recipient of the assertion.
   - Nonce: ensuring that the cryptographic nonce included in the RP’s request (if applicable) is included in the presentation.
   - Transaction terms: ensuring that the IAL, AAL, and FAL represented by the assertion are allowable under the applicable trust agreement.
+  - **OIDC SL1** All of these requirements are met or have been documented for resolution.  Transaction terms are out of scope at SL1 since we deferred any action on trust agreements.
+      
 - An RP SHALL treat subject identifiers as not inherently globally unique. Instead, the value of the assertion’s subject identifier is usually in a namespace under the assertion issuer’s control, as discussed in Sec. 3.3. This allows an RP to talk to multiple IdPs without incorrectly conflating subjects from different IdPs.
+- 
 - Assertions MAY include additional attributes about the subscriber. Section 3.9 contains privacy requirements for presenting attributes in assertions.
   - The RP MAY be given limited access to an identity API as discussed in Sec. 3.11.3, either in the same response as the assertion is received or through some other mechanism. 
     - The RP can use this API to fetch additional identity attributes for the subscriber that are not included in the assertion itself.
