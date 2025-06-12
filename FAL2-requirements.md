@@ -350,14 +350,16 @@ _see https://github.com/openid/ipsie/issues/84_
 **Section 3.11.3.1 External Identity APIs**
 - The attributes returned by the attribute provider are assumed to be independent of those returned directly from the IdP, and as such MAY use different identifiers, formats, or schemas.
 - Before accepting attributes from an external identity provider and associating them with the RP subscriber account, the RP SHALL verify that the attributes in question are allowed to be provided by the external attribute provider under the auspices of the trust agreement.
-
+  - **OIDC SL1:** Unlikely to have trust agreements in SL1.  Trust agreements are deferred for now.
+  
 **Section 3.12 Assertion Protection**
 - Assertions SHALL include a set of protections to prevent attackers from manufacturing valid assertions or reusing captured assertions at disparate RPs. The protections required are dependent on the details of the use case being considered, and specific protections are listed here.
 
 **Section 3.12.1 Assertion Identifier**
 - Assertions SHALL be sufficiently unique to permit unique identification by the target RP.
 - Assertions MAY accomplish this by use of an embedded nonce, issuance timestamp, assertion identifier, or a combination of these or other techniques.
-
+  - **OIDC SL1:** Enforces the use of a nonce value.
+    
 **Section 3.12.2 Signed Assertion** 
 - Assertions SHALL be cryptographically signed by the issuer (IdP).
 - The RP SHALL validate the digital signature or MAC of each such assertion based on the issuer’s key.
@@ -366,6 +368,7 @@ _see https://github.com/openid/ipsie/issues/84_
 - Shared symmetric keys used for this purpose by the IdP SHALL be independent for each RP to which they send assertions, and are normally established during registration of the RP.
 - Public keys for verifying digital signatures SHALL be transferred to the RP in a secure manner, and MAY be fetched by the RP in a secure fashion at runtime, such as through an HTTPS URL hosted by the IdP.
 - Approved cryptography SHALL be used.
+- **OIDC SL1:** Met by conformance with RFC9725 JSON Web Tokens Best Practices.
 
 **Section 3.12.3 Encrypted Assertion**
 - The contents of the assertion can be encrypted to protect their exposure to untrusted third parties, such as a user agent. This protection is especially relevant when the assertion contains PII of the subscriber—excluding opaque identifiers such as the subject identifier. Subject identifiers are meaningless outside of their target systems, unlike other possible identifiers such as SSN, email address, or driver’s license number. Therefore, subject identifiers are excluded as a qualifier for encrypting the assertion. A trust agreement MAY require encryption of assertion contents in other situations.
@@ -373,11 +376,13 @@ _see https://github.com/openid/ipsie/issues/84_
   - Shared symmetric keys used for this purpose by the IdP SHALL be independent for each RP to which they send assertions, and are normally established during registration of the RP.
   - Public keys for encryption SHALL be transferred over an authenticated protected channel and MAY be fetched by the IdP at runtime, such as through an HTTPS URL hosted by the RP.
 - All encryption of assertions SHALL use approved cryptography applied to the federation technology in use. For example, a SAML assertion can be encrypted using XML-Encryption, or an OpenID Connect ID Token can be encrypted using JSON Web Encryption (JWE). When used with back-channel presentation, an assertion can also be encrypted with a mutually-authenticated TLS connection, so long as there are no intermediaries between the IdP and RP that interrupt the TLS channel.
+  - **OIDC SL1:** FAL2 and SL1 do not require encrypted assertions.
 
 **Section 3.12.4 Audience Restriction** 
 - Assertions SHALL use audience restriction techniques to allow an RP to recognize whether or not it is the intended target of an issued assertion.
 - All RPs SHALL check that the audience of an assertion contains an identifier for their RP to prevent the injection and replay of an assertion generated for one RP at another RP.
 - In order to limit the places that an assertion could successfully be replayed by an attacker, IdPs SHOULD issue assertions designated for only a single audience. Restriction to a single audience is required at FAL2 and above.
+- **OIDC SL1:** Section 3 of the draft, "MUST validate that the aud claim is a single string and matches the OAuth Client ID of the RP;"
 
 
 **Section 4 General-Purpose IdPs** 
@@ -385,11 +390,15 @@ _When the IdP is hosted on a service and not on the subscriber’s device, or wh
 
 **Section 4.1 IdP Account Provisioning**
 - In order to make subscriber accounts available through an IdP, the subscriber accounts need to be provisioned at the IdP. The means by which the subscriber account is provisioned to the IdP SHALL be disclosed in the trust agreement.
+- **OIDC SL1:** N/A - trust agreements have been deferred at this time.
   
 **Section 4.3 Trust Agreements**
+- **OIDC SL1:** N/A - trust agreements have been deferred at this time. All of this section is currently out of scope
+
 - Trust agreements SHALL be established either:
   - as the result of an agreement by the federated parties, prior to the federation transaction, or
   - as the result of decision or action by the subscriber, during the federation transaction.
+
 
 **Section 4.3.1 Apriori Trust Agreement Establishment**
 - When the trust agreement is established by the federated parties prior to the federation transaction, the trust agreement SHALL establish the following terms, which MAY vary per IdP and RP relationship:
@@ -434,12 +443,14 @@ _When the IdP is hosted on a service and not on the subscriber’s device, or wh
   - The attribute storage policy of the RP for the RP subscriber account, including any available means for the subscriber to request deletion
   - The xALs required by the RP
   - Note that all information disclosed to the subscriber needs to be conveyed in a manner that is understandable and actionable, as discussed in Sec. 8.
-
-**Section 4.4 Discovery and Registration **
+- **OIDC SL1:** N/A - trust agreements have been deferred at this time.
+  
+**Section 4.4 Discovery and Registration**
 - To perform a federation transaction with a general-purpose IdP, the RP SHALL associate the assertion signing keys and other relevant configuration information with the IdP’s identifier, as stipulated by the trust agreement.
   - If these are retrieved over a network connection, request and retrieval SHALL be made over a secure protected channel from a location associated with the IdP’s identifier by the trust agreement. In many federation protocols, this is accomplished by the RP fetching the public keys and configuration data from a URL known to be controlled by the IdP or offered on the IdP’s behalf. It is also possible for the RP to be configured directly with this information in a static fashion, whereby the RP’s administrator enters the IdP information directly into the RP software.
 - Additionally, the RP SHALL register its information either with the IdP or with an authority the IdP trusts, as stipulated by the trust agreement. In many federation protocols, the RP is assigned an identifier during this stage, which the RP will use in subsequent communication with the IdP.
 - In all of these requirements, the IdP MAY use a trusted third party to facilitate its discovery and registration processes, so long as that trusted third party is identified in the trust agreement. For example, a consortium could make use of a hosted service that collects the configuration records of IdPs and RPs directly from participants. Instead of going to the IdP directly for its discovery record, an RP would instead go to this service. The IdP would in turn go to this service to find the identifiers and configuration information for RPs that are needed to connect.
+  - **OIDC SL1:** Covered by Section 3.1 and 3.3 in the draft document.  Pre-registered clients + OIDC Discovery + Network controls
 
 **Section 4.4.1 Manual Registration**
 _ At all FALs, the cryptographic keys and identifiers of the RP and IdP can be exchanged in a manual process, whereby the administrator of the RP submits the RP’s configuration to the IdP (either directly or through a trusted third party) and receives the identifier to use with that IdP. The RP administrator then configures the RP with this identifier and any additional information needed for the federation transaction to continue.
@@ -448,17 +459,20 @@ As this is a manual process, the registration happens prior to the federation tr
 
 - This process MAY be facilitated by some level of automated tooling, whereby the manual configuration points the systems in question to a trusted source of information that can be updated over time.
 - If such automation is used, the trust agreement SHALL enumerate the allowable terms of the cryptographic key distribution and assignment, including allowable cache lifetimes.
+- **OIDC SL1:** Supported by Sections 3.1 and 3.3
 
 **Section 4.4.2 Dynamic Registration**
 - At FAL1 and FAL2, the cryptographic keys and identifiers of the RP can be exchanged in a dynamic process, whereby the RP software presents its configuration to the IdP (either directly or through a trusted third party) and receives the identifier to use with that IdP. This process is specific to the federation protocol in use but requires machine-readable configuration data to be made available over the network. All transmission of configuration information SHALL be made over a secure protected channel to endpoints associated with the IdP’s identifier by the trust agreement.
 - IdPs SHOULD consider the risks of information leakage to multiple RP instances and take appropriate countermeasures, such as issuing PPIs to dynamically registered RPs as discussed in Sec. 3.3.1.
 - Dynamic registration SHOULD be augmented by attestations about the RP software and device, as discussed in Sec. 3.5.3.
+- **OIDC SL1:** Clients must be pre-registered in IPSIE.  Does not violate this guideline.
 
 **Section 4.5 Subscriber Authentication at the IdP** 
 - The IdP SHALL require the subscriber to have an authenticated session before any of the following events:
   - Approval of attribute release
   - Creation and issuance of an assertion
   - Establishment of a subscriber-driven trust agreement.
+- **OIDC SL1:** Meets this clause by requiring an AT to retrieve identity claims.
 
 **Section 4.6 Authentication and Attribute Disclosure**
 - The decision of whether a federation transaction proceeds SHALL be determined by the authorized party stipulated by the trust agreement. The decision can be calculated in a variety of ways, including:
@@ -466,6 +480,7 @@ As this is a manual process, the registration happens prior to the federation tr
  - a blocklist, which determines the circumstances under which the system will not allow the federation transaction to proceed; and
  - a runtime decision, which allows the authorized party to decide if the transaction can proceed and under what precise terms. Note that a runtime decision can be stored and applied to future transactions.
 - The IdP SHALL provide effective mechanisms for redress of subscriber complaints or problems (e.g., subscriber identifies an inaccurate attribute value). See Sec. 3.4.3 for additional requirements and considerations for redress mechanisms.
+- **OIDC SL1:** pre-registration of clients and user provisioning meets this requirement, RP can execute its own authorization mechanisms as well.
 
 **Section 4.6.1 IdP-Controlled Decisions**
 **Section 4.6.1.1 IdP Allowlists of RPs**
@@ -482,13 +497,16 @@ As this is a manual process, the registration happens prior to the federation tr
     - redacted to only the attributes in the allowlist entry, or
     - denied outright by the IdP.
 - IdP allowlists MAY include other information, such as the xALs under which the allowlist entry is applied. For example, an IdP could use an allowlist entry to bypass a consent screen for an FAL1 transaction but require confirmation of consent from the subscriber during an FAL3 transaction.
+- **OIDC SL1:** N/A - trust agreements have been deferred at this time.
+
 
 **Section 4.6.1.2 IdP Blocklists of RPs**
 - IdPs MAY establish blocklists of RPs not authorized to receive authentication assertions or attributes from the IdP, even if requested to do so by the subscriber.
 - If an RP is on an IdP’s blocklist, the IdP SHALL NOT produce an assertion targeting the RP in question under any circumstances.
 - IdP blocklists SHALL uniquely identify RPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
   - Any entities that share an identifier SHALL be considered equivalent for the purposes of the blocklist. For example, a wildcard domain identifier of “*.example.com” would match the domains “www.example.com”, “service.example.com”, and “unknown.example.com” equally. All three of these sites would blocked by the same blocklist entry.
-
+- **OIDC SL1:** N/A - we have an implicit allow list via the client pre-registration requirement.
+  
 **Section 4.6.1.3 IdP Runtime Decisions**
 - Every RP that is in a trust agreement with an IdP but not on an allowlist with that IdP SHALL be governed by a default policy in which runtime authorization decisions will be made by an authorized party identified by the trust agreement. Since the runtime decision occurs during the federation transaction, the authorized party is generally a person and, in most circumstances, is the subscriber; however, it is possible for another party such as an administrator to be prompted on behalf of the subscriber. Note that in a subscriber-driven trust agreement, a runtime decision with the subscriber is the only allowable means to authorize the release of subscriber attributes.
 - When processing a runtime decision, the IdP prompts the authorized party interactively during the federation transaction. The authorized party provides consent to release an authentication assertion and specific attributes to the RP. The IdP SHALL provide the authorized party with explicit notice and prompt them for positive confirmation before any attributes about the subscriber are transmitted to the RP.
@@ -499,6 +517,8 @@ As this is a manual process, the registration happens prior to the federation tr
   - To mitigate the risk of unauthorized exposure of sensitive information (e.g., shoulder surfing), the IdP SHALL, by default, mask sensitive information displayed to the subscriber. For more details on masking, see Sec. 8 on usability considerations.
 - An IdP MAY employ mechanisms to remember and re-transmit the same set of attributes to the same RP, remembering the authorized party’s decision. This mechanism is associated with the subscriber account as managed by the IdP.
   - If such a mechanism is provided, the IdP SHALL allow the authorized party to revoke such remembered access at a future time.
+- **OIDC SL1:** N/A - trust agreements have been deferred at this time
+
 
 **Section 4.6.2 RP-Controlled Decisions**
 **Section 4.6.2.1 RP Allowlists of IdPs** 
@@ -506,16 +526,20 @@ As this is a manual process, the registration happens prior to the federation tr
 - When placing an IdP in its allowlist, the RP SHALL confirm that the IdP abides by the terms of the trust agreement. Note that this confirmation can be facilitated by a federation authority or be undertaken directly by the RP.
 - RP allowlists SHALL uniquely identify IdPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
 - RP allowlist entries MAY be applied based on aspects of the subscriber account (such as the xALs required for the transaction). For example, an RP could use a runtime decision for FAL1 transactions but require an allowlisted IdP for FAL3 transactions.
+- **OIDC SL1:** client pre-registration is a de facto allow list.
+
 
 **Section 4.6.2.2 RP Blocklists of IdPs**
 - RPs MAY also establish blocklists of IdPs that the RP will not accept authentication or attributes from, even when requested by the subscriber. A blocklisted IdP can be otherwise in a valid trust agreement with the RP, for example if both are under the same federation authority.
 - RP blocklists SHALL uniquely identify IdPs through the means of domain names, cryptographic keys, or other identifiers applicable to the federation protocol in use.
+- **OIDC SL1:** N/A - client pre-registration is a de facto allow list.  Block lists are not needed.
 
 **Section 4.6.2.3 RP Runtime Decisions**
 - Every IdP that is in a trust agreement with an RP but not on an allowlist with that RP SHALL be governed by a default policy in which runtime authorization decisions will be made by the authorized party indicated in the trust agreement. In this mode, the authorized party is prompted by the RP to select or enter which IdP to contact for authentication on behalf of the subscriber. This process can be facilitated through the use of a discovery mechanism allowing the subscriber to enter a human-facing identifier such as an email address. This process allows the RP to programmatically select the appropriate IdP for that identifier. Since the runtime decision occurs during the federation transaction, the authorized party is generally a person and, in most circumstances, is the subscriber.
 - The RP MAY employ mechanisms to remember the authorized party’s decision to use a given IdP. Since this mechanism is employed prior to authentication at the RP, the manner in which the RP provides this mechanism (e.g., a browser cookie outside the authenticated session) is separate from the RP subscriber account described in Sec. 3.10.1.
   - If such a mechanism is provided, the RP SHALL allow the authorized party to revoke such remembered options at a future time.
-
+- **OIDC SL1:** N/A - trust agreements have been deferred at this time.
+  
 **Section 4.6.3 Provisioning Models for RP subscriber accounts**
 - The lifecycle of the provisioning process for an RP subscriber account varies depending on factors including the trust agreement discussed in Sec. 3.4 and the deployment pattern of the IdP and RP. However, in all cases, the RP subscriber account SHALL be provisioned at the RP prior to the establishment of an authenticated session at the RP in one of the following ways:
 
@@ -523,14 +547,17 @@ _Just-In-Time Provisioning_
 - An RP subscriber account is created automatically the first time the RP receives an assertion with an unknown federated identifier from an IdP. Any identity attributes learned during the federation process, either within the assertion or through an identity API as discussed in Sec. 3.11.3, MAY be associated with the RP subscriber account.
 - Accounts provisioned in this way are bound to the federated identifier in the assertion used to provision them.
 - This is the most common form of provisioning in federation systems, as it requires the least coordination between the RP and IdP. However, in such systems, the RP SHALL be responsible for managing any cached attributes it might have. 
+- **OIDC SL1:** Allowed at SL1
 
 _Pre-provisioning_
 - An RP subscriber account is created by the IdP pushing the attributes to the RP or the RP pulling attributes from the IdP. Pre-provisioning of accounts generally occurs in bulk through a provisioning API as discussed in Sec. 4.6.5, as the provisioning occurs prior to the represented subscribers authenticating through a federation transaction.
 - Pre-provisioned accounts SHALL be bound to a federated identifier at the time of provisioning. Any time a particular federated identifier is seen by the RP, the associated account can be logged in as a result. This form of provisioning requires infrastructure and planning on the part of the IdP and RP, but these processes can be facilitated by automated protocols. Additionally, the IdP and RP must keep the set of provisioned accounts synchronized over time as discussed in Sec. 4.6.4.
 - In this model, the RP also receives attributes about subscribers who have not yet interacted with the RP (and who may never do so). This is in contrast to other models, where the RP receives information only about the subset of subscribers that use the RP, and then only after the subscriber uses the RP for the first time. The privacy considerations of the RP having access to this information prior to a federation transaction SHALL be accounted for in the trust agreement.
+- **OIDC SL1:** N/A, applicable to IL1.
 
 _Ephemeral_
 - An RP subscriber account is created when processing the assertion, but then the RP subscriber account is terminated when the authenticated session ends. This process is similar to a just-in-time provisioning, but the RP keeps no long-term record of the account when the session is complete, in accordance with Sec. 3.10.3. This form of provisioning is useful for RPs that fully externalize access rights to the IdP, allowing the RP to be more simplified with less internal state. However, this pattern is not common because even the simplest RPs tend to have a need to track state within the application or at least keep a record of actions associated with the federated identifier.
+- **OIDC SL1:** We discussed this at the end of February 2025, but I don't recall how we decided to move forward.
 
 _Other_
 - Other RP subscriber account provisioning models are possible but the details of such models are outside the scope of these guidelines. The details of any alternative provisioning model SHALL be included in the privacy risk assessments of the IdP and RP.
@@ -546,6 +573,8 @@ _Other_
   - Upon receiving such a signal, the RP SHALL process the RP subscriber account as stipulated in the trust agreement.
   - If the RP subscriber account is terminated, the RP SHALL remove all personal information associated with the RP subscriber account, in accordance with Sec. 3.10.3.
   - If the reason for termination is suspicious or fraudulent activity, the IdP SHALL include this reason in its signal to the RP to allow the RP to review the account’s activity at the RP for suspicious activity, if specified in the trust agreement with that RP.
+ 
+  - **OIDC SL1:** N/A.  Impacts IL* and SL2+ levels.
 
 **Section 4.6.5 Provisioning APIs**
 - The attributes in the provisioning API available to a given RP SHALL be limited to only those necessary for the RP to perform its functions, including any audit and security purposes as discussed in Sec. 3.9.1.
@@ -564,6 +593,8 @@ _Other_
 - When a provisioning API is in use, the IdP SHALL signal to the RP when a subscriber account has been terminated.
   - When receiving such a signal, the RP SHALL remove the binding of the federated identifier from the account and SHALL terminate the account if necessary (e.g., there are no other federated identifiers linked to this account or the trust agreement dictates such an action).
   - The RP SHALL remove all personal information sourced from the provisioning API in accordance with Sec. 3.10.3.
+- **OIDC SL1:** N/A.  Impacts IL*
+
 
 **Section 4.6.6 Collection of Additional Attributes by the RP**
 - The RP MAY collect and maintain additional attributes from the subscriber beyond those provided by the IdP. For example, the RP could collect a preferred display name directly from the subscriber that is not provided by the IdP. The RP could also have a separate agreement with an attribute provider that gives the RP access to an identity API not associated with the IdP. For example, the RP could receive a state license number from the IdP, but use a separate attribute verification API to check if a particular license number is currently valid. The assertion from the IdP binds the license to the subscriber, but the attribute verification API provides additional information beyond what the IdP can share or be authoritative for.
@@ -571,17 +602,25 @@ _Other_
 - The RP SHALL disclose to the subscriber the purpose for collection of any additional attributes.
   - These attributes SHALL be used solely for the stated purposes of the RP’s functionality and SHALL NOT have any secondary use, including communication of said attributes to other parties.
 - The RP SHALL provide an effective means of redress for the subscriber to update and remove these additionally-collected attributes from the RP subscriber account. See Sec. 3.4.3 for additional requirements and considerations for redress mechanisms.
+- **OIDC SL1:** N/A.
+
 
 **Section 4.6.7 Time-based Removal of RP Subscriber Accounts**
 - If an RP is using a just-in-time provisioning mechanism, the RP only learns of the existence of a subscriber account when that account is first used at the RP. If the IdP does not inform the RP of terminated subscriber accounts using shared signaling as described in Sec 4.8, an RP could accumulate RP subscriber accounts that are no longer accessible from the IdP. This poses a risk to the RP for holding personal information in the RP subscriber accounts. In such circumstances, the RP MAY employ a time-based mechanism to identify RP subscriber accounts for termination that have not been accessed after a period of time tailored to the usage patterns of the application. For example, an RP that is usually accessed on a weekly basis could set a timeout of 120 days since last access at the RP to mark the RP subscriber account for termination. An RP that expects longer gaps between access, such as a service used annually, should have a much longer time frame, such as five years.
 - When processing such an inactive account, the RP SHALL provide sufficient notice to the subscriber, about the pending termination of the account and provide the subscriber with an option to re-activate the account prior to its scheduled termination.
 - Upon termination, the RP SHALL remove all personal information associated with the RP subscriber account, in accordance with Sec. 3.10.3.
 
+- **OIDC SL1:** JIT provisioning guidance needs to be clarified to ensure that these accounts are always picked up by the provisioning service.
+
 **Section 4.7 Reauthentication and Session Requirements in Federated Environments**
 - The IdP ending the subscriber’s session at the IdP will not necessarily cause any sessions that subscriber might have at downstream RPs to end as well. The RP and IdP MAY communicate end-session events to each other, if supported by the federation protocol or through shared signaling (see Sec. 4.8).
 - At the time of a federated transaction request, the subscriber could have a pre-existing authenticated session at the IdP which MAY be used to generate an assertion to the RP.
   - The IdP SHALL communicate to the RP any information the IdP has regarding the time of the subscriber’s latest authentication event at the IdP, and the RP MAY use this information in making authorization and access decisions.
+  - - **OIDC SL1:** OIDC `auth_time` claim is required.
+     
   - Depending on the capabilities of the federation protocol in use, the IdP SHOULD allow the RP to request that the subscriber provide a fresh authentication at the IdP instead of using the existing session at the IdP. For example, suppose the subscriber authenticates at the IdP for one transaction. Then, 30 min later, the subscriber starts a federation transaction at the RP. Depending on xAL requirements, the subscriber’s existing session at the IdP can be used to avoid prompting the subscriber for their authenticators. The resulting assertion to the RP will indicate that the last time the subscriber had authenticated to the RP was 30 min in the past. The RP can then use this information to determine whether this is reasonable for the RP’s needs, and, if possible within the federation protocol, request the IdP to prompt the subscriber for a fresh authentication event instead.
+ 
+
 - An RP requiring authentication through a federation protocol SHALL specify the maximum acceptable authentication age to the IdP, either through the federation protocol (if possible) or through the terms of the trust agreement.
   - The authentication age represents the time since the last authentication event in the subscriber’s session at the IdP, and the IdP SHALL reauthenticate the subscriber if they have not been authenticated within that time period.
   - The IdP SHALL communicate the authentication event time to the RP to allow the RP to decide if the assertion is sufficient for authentication at the RP and to determine the time for the next reauthentication event.
