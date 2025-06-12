@@ -7,7 +7,7 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 
 | IPSIE<br>LEVEL|   Application (aka RP)                                                 |  Identity Service                                                                                             |
 |---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| SL1           |   - MUST meet NIST 800-63-4 FAL2 compliance <br>- Session lifetime MUST be set from the assertion | - MUST meet NIST 800-63-4 FAL2 compliance*<br> - MUST enforce MFA and communicate an authentication class to the Application |
+| SL1           |   - MUST meet NIST 800-63-4 FAL2 compliance* <br>- Application-specific session lifetime MUST be set from the assertion | - MUST meet NIST 800-63-4 FAL2 Compliance* <br> - MUST enforce MFA and communicate an authentication class to the Application |
 | SL2           |  - MUST terminate sessions at the request of the Identity Service| - MUST enforce authentication method requests from Application |
 | SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
 ||||
@@ -22,7 +22,7 @@ Level SL1 enables basic single sign-on from applications to the identity provide
 
 ***Note:** IPSIE does not include all of the controls specified in NIST SP800-63rev4 at FAL2.  IPSIE SL1 requires the technical controls from FAL2 which impact the security of the federation protocol(s).  Business agreements, such as data handling policies, are out of scope for IPSIE. 
 
-The Application respects the session lifetime as communicated by the Identity Service in the assertion, and reauthenticates the user through the Identity Service after the expiration.
+The Application respects the session lifetime as communicated by the Identity Service in the assertion, and re-validates the session with the Identity Service after the expiration. Re-validation can occur with a new single sign-on flow, or using refresh tokens. It is likely that the session lifetime communicated by the Identity Service is shorter than the session at the Identity Service. The goal is to let the Identity Service set the interval in which the RP checks back at the Identity Service.
 
 The Identity Service MUST communicate information about the user's authentication method at the Identity Service in the SSO assertion.
 
