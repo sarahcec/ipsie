@@ -693,24 +693,32 @@ _FAL3 requirements deleted_
   - **OIDC SL1** All of these requirements are met or have been documented for resolution.  Transaction terms are out of scope at SL1 since we deferred any action on trust agreements.
       
 - An RP SHALL treat subject identifiers as not inherently globally unique. Instead, the value of the assertion’s subject identifier is usually in a namespace under the assertion issuer’s control, as discussed in Sec. 3.3. This allows an RP to talk to multiple IdPs without incorrectly conflating subjects from different IdPs.
+  - **OIDC SL1** Need to add this to the common requirements doc. See https://github.com/openid/ipsie/issues/93
 - 
 - Assertions MAY include additional attributes about the subscriber. Section 3.9 contains privacy requirements for presenting attributes in assertions.
   - The RP MAY be given limited access to an identity API as discussed in Sec. 3.11.3, either in the same response as the assertion is received or through some other mechanism. 
     - The RP can use this API to fetch additional identity attributes for the subscriber that are not included in the assertion itself.
-- The assertion’s validity time window is the time between its issuance and its expiration. This window needs to be large enough to allow the RP to process the assertion and create a local application session for the subscriber, but should not be longer than necessary for such establishment. Long-lived assertions have a greater risk of being stolen or replayed; a short assertion validity time window mitigates this risk. Assertion validity time windows SHALL NOT be used to limit the session at the RP. 
+- The assertion’s validity time window is the time between its issuance and its expiration. This window needs to be large enough to allow the RP to process the assertion and create a local application session for the subscriber, but should not be longer than necessary for such establishment. Long-lived assertions have a greater risk of being stolen or replayed; a short assertion validity time window mitigates this risk. Assertion validity time windows SHALL NOT be used to limit the session at the RP.
+- **OIDC SL1** The remaining requirements here are already met.
 
 **Section 4.10 Assertion Requests**
 - When the federation transaction is initiated by the RP, the RP’s request for an assertion SHALL contain:
   - An identifier for the RP
+  - **OIDC SL1** requires preregistered clients with client_id which is returned in the assertion
   - A cryptographic nonce, to be returned in the assertion
+  - **OIDC SL1** Nonces are required in the draft
 - The RP’s request SHOULD additionally contain:
   - The set of identity attributes requested by the RP and their purpose of use at the RP; this is a subset of what is allowed by the trust agreement
   - The requirements for the authentication event at the IdP
+  - **OIDC SL1** Since these are not required, they will not be included in SL1.
     
 **Note that federation transactions are always initiated by the RP at FAL2 or higher.**
 
+**OIDC SL1** This is already baked into OIDC, adding an issue to ensure this is in the common requirements draft. https://github.com/openid/ipsie/issues/94
+
 **Section 4.11 Assertion Presentation**
 -Assertions MAY also be proxied to facilitate federation between IdPs and RPs using different presentation methods, as discussed in detail in Sec. 3.2.3.
+**OIDC SL1** - Created an issue for discussion https://github.com/openid/ipsie/issues/95
 
 **Section 4.11.1 Back-Channel Presentation**
 - In the back-channel presentation model shown in Fig. 11, the subscriber is given an assertion reference to present to the RP, generally through the front channel. The assertion reference itself contains no information about the subscriber and SHALL be resistant to tampering and fabrication by an attacker. The RP presents the assertion reference to the IdP to fetch the assertion. How this is achieved varies form one protocol to the next. In the authorization code flow and some forms of the hybrid flow of [OIDC] the assertion (the ID Token) is presented in the back channel in exchange for the assertion reference (the authorization code). In the artifact binding profile of [SAML-Bindings], the SAML assertion is presented in the back channel.
@@ -735,6 +743,8 @@ _Note that while it is technically possible for an assertion reference (which is
 - The RP SHALL protect itself against injection of manufactured or captured assertion references by the use of cross-site scripting protection, rejecting assertion references outside of the correct stage of a federation transaction, or other accepted techniques discussed in Sec. 3.10.1.
 - When assertion references are presented to the IdP, the IdP SHALL verify that the RP presenting the assertion reference is the same RP that made the assertion request resulting in the assertion reference. Examples for this are discussed in Sec 10.12 such as the authorization code flow of [OIDC] with additional security profiles such as [FAPI].
 
+- **OIDC SL1** OIDC SL1 uses the back channel for presentation of the assertion.
+
 _Note that in a federation proxy described in Sec. 3.2.3, the upstream IdP audience restricts the assertion reference and assertion to the proxy, and the proxy restricts any newly-created assertion references or assertions to the downstream RP._
 
 **Section  4.11.2 Front-Channel Presentation**
@@ -746,6 +756,9 @@ _Front-channel presentation methods expose the assertion to parties other than t
 - The RP SHALL protect itself against injection of manufactured or captured assertion by the use of cross-site scripting protection, rejecting assertions outside of the correct stage of a federation transaction, or other accepted techniques discussed in Sec. 3.10.1.
 - Conveyance of the assertion from the IdP to the subscriber, as well as from the subscriber to the RP, SHALL be made over an authenticated protected channel.
 - With general-purpose IdPs, it is common for front-channel communications to be accomplished using HTTP redirects, where the contents of the assertion are made available as part of an HTTP request URL. Due to the nature of the HTTP ecosystem, these request URLs are sometimes available in unexpected places, such as access logs and browser history. These logs and other artifacts tend to live on long past the federation transaction and are available in other contexts, which increases the attack surface for reading the assertion. As a consequence, an IdP that uses HTTP redirects for front channel presentation of assertions that contain PII SHALL encrypt the assertion as discussed in Sec 3.12.3.
+
+
+**OIDC SL1** N/A
 
 **Section 5 Subscriber-Controlled Wallets**
 _N.B. Deleted for IPSIE SL1 -dhs_
