@@ -8,7 +8,7 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 | IPSIE<br>LEVEL|   Application (aka RP)                                                 |  Identity Service                                                                                             |
 |---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | SL1           |   - MUST meet NIST 800-63-4 FAL2 compliance* <br>- Application-specific session lifetime MUST be set from the assertion | - MUST meet NIST 800-63-4 FAL2 Compliance* <br> - MUST enforce MFA and communicate an authentication class to the Application |
-| SL2           |  - MUST terminate sessions at the request of the Identity Service| - MUST enforce authentication method requests from Application |
+| SL2           |  - MUST terminate sessions at the request of the Identity Service <br> - MUST not accept unsolicited federation assertions| - MUST enforce authentication method requests from Application |
 | SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
 ||||
 | IL1           | - MUST support Create, Update and Delete of users by the Identity Service prior to sign-in <br>- Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
@@ -29,6 +29,8 @@ The Identity Service MUST communicate information about the user's authenticatio
 ### IPSIE Session Lifecycle SL2 - MFA, Logout, & Session Termination
 
 Level SL2 adds the ability for the Application to request specific authentication methods when the user logs in at the Identity Service.
+
+Applications MUST NOT accept unsolicited federation requests from the identity service (e.g. SAML IdP initiated federation).
 
 The Identity Services MUST be able to communicate a session termination event.  The Application MUST act upon session termination requests from the Identity Services.
 
