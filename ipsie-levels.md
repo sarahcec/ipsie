@@ -18,7 +18,7 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 -----
 ### IPSIE Session Lifecycle SL1 - Single Sign-On & Session Lifetime Controls
 
-Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the technical requirements of [FAL2 in NIST 800-63-4](https://pages.nist.gov/800-63-4/sp800-63c/fal/). (Note that currently 800-63-4 is in Second Public Draft and may change before final publication. We intend to update the recommendations accordingly if there are relevant changes in the final version.)
+Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the technical requirements of [FAL2 in NIST 800-63-4](https://pages.nist.gov/800-63-4/sp800-63c/fal/). 
 
 ***Note:** IPSIE does not include all of the controls specified in NIST SP800-63rev4 at FAL2.  IPSIE SL1 requires the technical controls from FAL2 which impact the security of the federation protocol(s).  Business agreements, such as data handling policies, are out of scope for IPSIE. 
 
