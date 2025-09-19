@@ -11,11 +11,11 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 | SL2           |  - MUST terminate sessions at the request of the Identity Service <br> - MUST not accept unsolicited federation assertions| - MUST enforce authentication method requests from Application |
 | SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
 ||||
-| AL1           | - MUST support Create, Update and Delete of users by the Identity Service prior to sign-in <br>- Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
-| AL2           |  - MUST support mapping group claims to application roles and capabilities | - MUST synchronize user group membership claims to Application |
+| AL1           | - MUST support suspend, archive, or delete of users by the Identity Service | - MUST deprovision accounts from the Application|
+| AL2           |  - MUST support create and update of users by the Identity Service prior to sign-in <br>- Local create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>- MUST support mapping group claims to application roles and capabilities |- MUST synchronize provisioned users and their profile data to the Application <br> - MUST synchronize user group membership claims to Application |
 | AL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
-
 -----
+
 ### IPSIE Session Lifecycle SL1 - Single Sign-On & Session Lifetime Controls
 
 Level SL1 enables basic single sign-on from applications to the identity provider, communicating identity statements about the user. Single sign-on in Level SL1 meets the technical requirements of [FAL2 in NIST 800-63-4](https://pages.nist.gov/800-63-4/sp800-63c/fal/). 
