@@ -1,9 +1,9 @@
 # IPSIE Levels
 
 - *SL* - Session Lifecycle
-- *IL* - Identity Lifecycle
+- *AL* - Account Lifecycle
 
-Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). SL* and IL* are independent of each other.
+Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). SL* and AL* are independent of each other.
 
 | IPSIE<br>LEVEL|   Application (aka RP)                                                 |  Identity Service                                                                                             |
 |---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
@@ -11,9 +11,9 @@ Each level includes the previous level (_e.g._ SL3 includes the requirements of 
 | SL2           |  - MUST terminate sessions at the request of the Identity Service <br> - MUST not accept unsolicited federation assertions| - MUST enforce authentication method requests from Application |
 | SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
 ||||
-| IL1           | - MUST support Create, Update and Delete of users by the Identity Service prior to sign-in <br>- Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
-| IL2           |  - MUST support mapping group claims to application roles and capabilities | - MUST synchronize user group membership claims to Application |
-| IL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
+| AL1           | - MUST support Create, Update and Delete of users by the Identity Service prior to sign-in <br>- Local Create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>| - MUST synchronize provisioned users and their profile data to the Application|
+| AL2           |  - MUST support mapping group claims to application roles and capabilities | - MUST synchronize user group membership claims to Application |
+| AL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
 
 -----
 ### IPSIE Session Lifecycle SL1 - Single Sign-On & Session Lifetime Controls
@@ -42,15 +42,15 @@ The Application communicates session changes to the Identity Service such as IP 
 
 The Identity Service communicates changes in the account and device posture to the application, enabling the application to take actions it determines are necessary based on its own policies about these changes.  Neither application nor identity services are obliged to act upon any state changes, the policies for responding to state changes are not in scope for SL3.
 
-### IPSIE Identity Lifecycle Level IL1 - User and Profile Synchronization
+### IPSIE Account Lifecycle Level AL1 - User and Profile Synchronization
 
-IPSIE Lifecycle Level P1 requires the Identity Service to synchonize with the Application the users that have access and their profile data. The Application SHALL NOT independently create, update, or delete users, or the provided profile data, of users managed by Identity Services. While an Application may also support support Just In Time (JIT) for account creation using claims in an SSO token, JIT support is NOT a requirement of IPSIE.
+IPSIE Lifecycle Level P1 requires the Identity Service to synchronize with the Application the users that have access and their profile data. The Application SHALL NOT independently create, update, or delete users, or the provided profile data, of users managed by Identity Services. While an Application may also support support Just In Time (JIT) for account creation using claims in an SSO token, JIT support is NOT a requirement of IPSIE.
 
-### IPSIE Identity Lifecycle Level IL2 - User Group Membership 
+### IPSIE Account Lifecycle Level AL2 - User Group Membership 
 
 Level P2 adds the ability for the Identity Service to organize users into groups and to synchonize group memberhip with the Application. The Application MUST use group membership to determine the roles and capabilities of the user.
 
-### IPSIE Identity Lifecycle Level IL3 - User Roles
+### IPSIE Account Lifecycle Level AL3 - User Roles
 
 Level P3 adds the ability for the Application to publish the roles that exist in the Application to the Identity Service, and for the Identity Service to map these roles to users and synchronize with the Application which roles each user has.
 
