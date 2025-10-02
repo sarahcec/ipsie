@@ -5,15 +5,15 @@
 
 Each level includes the previous level (_e.g._ SL3 includes the requirements of SL1 and SL2). SL* and AL* are independent of each other.
 
-| IPSIE<br>LEVEL|   Application (aka RP)                                                 |  Identity Service                                                                                             |
-|---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| SL1           |   - MUST meet NIST 800-63-4 FAL2 compliance* <br>- Application-specific session lifetime MUST be set from the assertion | - MUST meet NIST 800-63-4 FAL2 Compliance* <br> - MUST enforce MFA and communicate an authentication class to the Application |
-| SL2           |  - MUST terminate sessions at the request of the Identity Service <br> - MUST not accept unsolicited federation assertions| - MUST enforce authentication method requests from Application |
-| SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application |
-||||
-| AL1           | - MUST support suspend, archive, or delete of users by the Identity Service | - MUST deprovision accounts from the Application|
-| AL2           |  - MUST support create and update of users by the Identity Service prior to sign-in <br>- Local create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>- MUST support mapping group claims to application roles and capabilities |- MUST synchronize provisioned users and their profile data to the Application <br> - MUST synchronize user group membership claims to Application |
-| AL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
+| IPSIE<br>LEVEL|   Application (aka RP)                                                 |  Human Identities                                                                                             | Non-Human Identities |
+|---------------|----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| SL1           |   - MUST meet NIST 800-63-4 FAL2 compliance* <br>- Application-specific session lifetime MUST be set from the assertion | - MUST meet NIST 800-63-4 FAL2 Compliance* <br> - MUST enforce MFA and communicate an authentication class to the Application | - MUST meet NIST 800-63-4 FAL2 Compliance* <br> - MUST enforce non-migratable hardware bound credentials or short-lived shared secrets |
+| SL2           |  - MUST terminate sessions at the request of the Identity Service <br> - MUST not accept unsolicited federation assertions| - MUST enforce authentication method requests from Application | - MUST enforce authentication method requests from Application |
+| SL3           |  - MUST communicate session state changes to Identity Service | - MUST communicate user, session, and device state changes to the Application | - MUST communicate session, and execution environment state changes to the Application |
+|||||
+| AL1           | - MUST support suspend, archive, or delete of users by the Identity Service | - MUST deprovision accounts from the Application|- MUST deprovision accounts from the Application|
+| AL2           |  - MUST support create and update of users by the Identity Service prior to sign-in <br>- Local create, Update, and Delete of users and the Identity Service provided profiles SHALL NOT be allowed <br>- MUST support mapping group claims to application roles and capabilities |- MUST synchronize provisioned users and their profile data to the Application <br> - MUST synchronize user group membership claims to Application | - MUST synchronize provisioned users and their profile data to the Application <br> - MUST synchronize user group membership claims to Application |
+| AL3           |  - MUST expose application roles to the Identity Service | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application | - MUST consume Application roles and map to users<br> - MUST synchronize user role claims to Application |
 -----
 
 ### IPSIE Session Lifecycle SL1 - Single Sign-On & Session Lifetime Controls
@@ -53,6 +53,3 @@ Level P2 adds the ability for the Identity Service to organize users into groups
 ### IPSIE Account Lifecycle Level AL3 - User Roles
 
 Level P3 adds the ability for the Application to publish the roles that exist in the Application to the Identity Service, and for the Identity Service to map these roles to users and synchronize with the Application which roles each user has.
-
-
-
